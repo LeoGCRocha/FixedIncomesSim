@@ -1,4 +1,4 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
 
 namespace FixedIncome.Domain.FixedIncomes.Events;
 

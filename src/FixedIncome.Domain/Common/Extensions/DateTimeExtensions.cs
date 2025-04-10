@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.FixedIncomes.Extensions;
+namespace FixedIncome.Domain.Common.Extensions;
 
 public static class DateTimeExtensions
 {

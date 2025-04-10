@@ -1,14 +1,16 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomes.Events;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
 namespace FixedIncome.Domain.Entities;
 
-public class FixedIncome : AggregateRoot<Guid>
+public sealed class FixedIncomeSim : AggregateRoot<Guid>
 {
     private readonly List<FixedIncomeOrder> _orders = [];
     private readonly List<FixedIncomeBalance> _balances = [];
-    
-    public FixedIncome(
+     
+    public FixedIncomeSim(
         Guid id, 
         DateTime startDate, 
         DateTime endDate,
@@ -32,8 +34,8 @@ public class FixedIncome : AggregateRoot<Guid>
     }
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
-    private decimal StartAmount { get; }
-    private decimal MonthlyYield { get; }
+    public decimal StartAmount { get; }
+    public decimal MonthlyYield { get; }
     public decimal MonthlyContribution { get; private set; }
     public decimal InvestedAmount { get; private set; }
     public decimal FinalAmount { get; private set; }
@@ -48,7 +50,7 @@ public class FixedIncome : AggregateRoot<Guid>
         while (currentDate.AddMonths(1) < EndDate)
         {
             InvestedAmount += MonthlyContribution;
-            var orderToAdd = new FixedIncomeOrder(Guid.NewGuid(), Id, currentDate, EndDate, MonthlyContribution,
+            var orderToAdd = new FixedIncomeOrder(Guid.NewGuid(), currentDate, EndDate, MonthlyContribution,
                 MonthlyYield);
             _orders.Add(orderToAdd);
             
@@ -61,7 +63,7 @@ public class FixedIncome : AggregateRoot<Guid>
         FinalAmount = InvestedAmount + _monthlyProfits.Sum(e => e.Value);
         FinalAmountNet = InvestedAmount + _monthlyNetProfits.Sum(e => e.Value);
         
-        RaiseDomainEvent(new FixedIncomeSimulationEnded(Id, nameof(FixedIncome)));
+        RaiseDomainEvent(new FixedIncomeSimulationEnded(Id, nameof(FixedIncomeSim)));
     }
 
     private void GenerateBalance()
@@ -70,7 +72,7 @@ public class FixedIncome : AggregateRoot<Guid>
         int count = 1;
         while (currentDate.AddMonths(1) < EndDate)
         {
-            var balance = new FixedIncomeBalance(Guid.NewGuid(), Id, currentDate.AddMonths(1), 0, 0);
+            var balance = new FixedIncomeBalance(Guid.NewGuid(), currentDate.AddMonths(1), 0, 0);
 
             balance.AddProfit(_monthlyNetProfits[currentDate.Date]);
             balance.AddAmount(count * MonthlyContribution + balance.Profit);

@@ -1,16 +1,14 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
 
-namespace FixedIncome.Domain.Entities;
+namespace FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
 
 public class FixedIncomeBalance : Entity<Guid>
 {
-    public Guid FixedIncomeId { get; init; }
-    public DateTime ReferenceDate { get; init; }
+    public DateTime ReferenceDate { get; private set; }
     public decimal Amount { get; private set; }
     public decimal Profit { get; private set;  }
-    public FixedIncomeBalance(Guid id, Guid fixedIncomeId, DateTime referenceDate, decimal amount, decimal profit) : base(id)
+    public FixedIncomeBalance(Guid id, DateTime referenceDate, decimal amount, decimal profit) : base(id)
     {
-        FixedIncomeId = fixedIncomeId;
         ReferenceDate = referenceDate;
         Amount = amount;
         Profit = profit;

@@ -1,0 +1,6 @@
+﻿services:
+  fixedincome.api:
+    image: fixedincome.api
+    build:
+      context: .
+      dockerfile: src/FixedIncome.API/Dockerfile

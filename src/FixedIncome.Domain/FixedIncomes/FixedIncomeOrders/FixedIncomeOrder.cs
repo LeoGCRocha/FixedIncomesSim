@@ -1,12 +1,12 @@
-using FixedIncome.Domain.Abstractions;
-using FixedIncome.Domain.FixedIncomes;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.Enums;
+using FixedIncome.Domain.Common.Extensions;
 using FixedIncome.Domain.FixedIncomes.Extensions;
 
-namespace FixedIncome.Domain.Entities;
+namespace FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
 public class FixedIncomeOrder : Entity<Guid>
 {
-    public Guid FixedIncomeId { get; init; }
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
     public decimal StartAmount { get; private set; }
@@ -17,13 +17,11 @@ public class FixedIncomeOrder : Entity<Guid>
     
     private readonly List<FixedIncomeOrderEvent> _events = [];
     public FixedIncomeOrder(Guid id, 
-        Guid fixedIncomeId, 
         DateTime startDate, 
         DateTime endDate, 
         decimal startAmount,
         decimal monthlyYield) : base(id)
     {
-        FixedIncomeId = fixedIncomeId;
         StartDate = startDate;
         EndDate = endDate;
         StartAmount = startAmount;
@@ -70,7 +68,7 @@ public class FixedIncomeOrder : Entity<Guid>
             if (nextMonth > EndDate)
                 nextMonth = EndDate;
 
-            var orderEvent = new FixedIncomeOrderEvent(Guid.NewGuid(), Id, currentDate, nextMonth, CurrentAmount, MonthlyYield);
+            var orderEvent = new FixedIncomeOrderEvent(Guid.NewGuid(), currentDate, nextMonth, CurrentAmount, MonthlyYield);
             _events.Add(orderEvent);
             CurrentAmount += orderEvent.Profit;
             currentDate = nextMonth;

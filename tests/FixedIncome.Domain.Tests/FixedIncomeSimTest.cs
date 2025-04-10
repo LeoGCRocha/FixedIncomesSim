@@ -4,13 +4,13 @@ namespace FixedIncome.Domain.Tests;
 
 using Entities;
 
-public class FixedIncomeTest
+public class FixedIncomeSimTest
 {
     [Fact]
     public void Should_Create_12_Orders_When_A_Year_FixedIncome_Is_Created()
     {
         // Arrange && Act
-        var fixedIncome = new FixedIncome(
+        var fixedIncome = new FixedIncomeSim(
             Guid.NewGuid(),
             DateTime.Now,
             DateTime.Now.AddMonths(12),
@@ -26,7 +26,7 @@ public class FixedIncomeTest
     public void Should_Simulate_Correct_Profit_To_Fixed_Income()
     {
         // Arrange && Act
-        var fixedIncome = new FixedIncome(
+        var fixedIncome = new FixedIncomeSim(
             Guid.NewGuid(),
             DateTime.Now,
             DateTime.Now.AddMonths(1),

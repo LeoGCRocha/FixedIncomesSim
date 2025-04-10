@@ -1,7 +1,7 @@
-using FixedIncome.Domain.FixedIncomes.Shared;
-using FixedIncome.Domain.Primitives;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.Enums;
 
-namespace FixedIncome.Domain.FixedIncomes.ValueObjects;
+namespace FixedIncome.Domain.Common.ValueObjects;
 
 public class InvestmentInformation : ValueObject
 {

@@ -1,20 +1,19 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.Extensions;
 using FixedIncome.Domain.FixedIncomes.Extensions;
 
-namespace FixedIncome.Domain.Entities;
+namespace FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
 public class FixedIncomeOrderEvent : Entity<Guid>
 {
     public DateTime StartReferenceDate { get; }
     public DateTime EndReferenceDate { get; }
-    private decimal StartAmount { get; }
-    private decimal MonthlyYield { get; }
-    private Guid FixedIncomeOrderId { get; }
+    public decimal StartAmount { get; private set;  }
+    public decimal MonthlyYield { get; private set; }
     public decimal Amount { get; private set; }
     public decimal Profit { get; private set; }
 
     public FixedIncomeOrderEvent(Guid id, 
-        Guid fixedIncomeOrderId, 
         DateTime startReferenceDate,
         DateTime endReferenceDate, 
         decimal amount, 
@@ -24,7 +23,6 @@ public class FixedIncomeOrderEvent : Entity<Guid>
         EndReferenceDate = endReferenceDate;
         StartAmount = amount;
         MonthlyYield = monthlyYield;
-        FixedIncomeOrderId = fixedIncomeOrderId;
 
         Simulate();
     }

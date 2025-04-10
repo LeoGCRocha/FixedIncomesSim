@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.FixedIncomes;
+namespace FixedIncome.Domain.Common.Enums;
 
 public enum ETaxGroup
 {

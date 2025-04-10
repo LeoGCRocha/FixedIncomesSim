@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.Primitives;
+namespace FixedIncome.Domain.Common.Abstractions;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {
