@@ -1,4 +1,4 @@
-using FixedIncome.Domain.Entities;
+using FixedIncome.Domain.FixedIncomes;
 using Microsoft.EntityFrameworkCore;
 
 namespace FixedIncome.Infrastructure.Persistence;

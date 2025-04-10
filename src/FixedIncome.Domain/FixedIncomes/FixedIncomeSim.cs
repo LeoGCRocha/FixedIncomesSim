@@ -1,9 +1,10 @@
 using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.ValueObjects;
 using FixedIncome.Domain.FixedIncomes.Events;
 using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
 using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
-namespace FixedIncome.Domain.Entities;
+namespace FixedIncome.Domain.FixedIncomes;
 
 public sealed class FixedIncomeSim : AggregateRoot<Guid>
 {
@@ -16,7 +17,8 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
         DateTime endDate,
         decimal startAmount, 
         decimal monthlyYield,
-        decimal monthlyContribution
+        decimal monthlyContribution,
+        InvestmentInformation? investmentInformation = null
         ) : base(id)
     {
         if (startDate > endDate)
@@ -28,6 +30,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
         MonthlyContribution = monthlyContribution;
         EndDate = endDate;
         InvestedAmount = StartAmount;
+        Information = investmentInformation;
         
         Simulate();
         GenerateBalance();
@@ -40,6 +43,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     public decimal InvestedAmount { get; private set; }
     public decimal FinalAmount { get; private set; }
     public decimal FinalAmountNet { get; private set; }
+    public InvestmentInformation? Information { get; private set; }
     
     private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
     private readonly Dictionary<DateTime, decimal> _monthlyNetProfits = new ();

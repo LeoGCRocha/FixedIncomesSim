@@ -1,4 +1,3 @@
-using FixedIncome.Domain.Entities;
 using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

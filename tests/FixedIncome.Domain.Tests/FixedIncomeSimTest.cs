@@ -1,8 +1,7 @@
+using FixedIncome.Domain.FixedIncomes;
 using FluentAssertions;
 
 namespace FixedIncome.Domain.Tests;
-
-using Entities;
 
 public class FixedIncomeSimTest
 {

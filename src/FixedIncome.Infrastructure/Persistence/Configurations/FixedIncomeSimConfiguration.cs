@@ -1,6 +1,5 @@
+using FixedIncome.Domain.FixedIncomes;
 using Microsoft.EntityFrameworkCore;
-
-using FixedIncome.Domain.Entities;
 using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
 using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -40,11 +39,27 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
             .WithOne() // Balance have one FixedIncome
             .HasForeignKey("FixedIncomeId")
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.OwnsOne(f => f.Information)
+            .Property(i => i.Title)
+            .HasColumnName("investiment_title")
+            .HasDefaultValue(null);
+
+        builder.OwnsOne(f => f.Information, info =>
+        {
+            info.Property(i => i.Type)
+                .HasDefaultValue(null);
+
+            info.HasIndex(f => f.Type);
+        });
+        
+        builder.HasIndex(f => f.StartDate);
         
         // Shadow columns
         builder.Property<DateTime>("created_at")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
+        builder.HasIndex("created_at");
 
         builder.Property<DateTime>("update_at")
             .HasDefaultValueSql("NOW()")
