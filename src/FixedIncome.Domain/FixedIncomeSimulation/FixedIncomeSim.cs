@@ -1,4 +1,5 @@
 using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.Enums;
 using FixedIncome.Domain.Common.ValueObjects;
 using FixedIncome.Domain.FixedIncomeSimulation.Events;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
@@ -10,15 +11,14 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
 {
     private readonly List<FixedIncomeOrder> _orders = [];
     private readonly List<FixedIncomeBalance> _balances = [];
-     
+
     public FixedIncomeSim(
         Guid id, 
         DateTime startDate, 
         DateTime endDate,
         decimal startAmount, 
         decimal monthlyYield,
-        decimal monthlyContribution,
-        InvestmentInformation? investmentInformation = null
+        decimal monthlyContribution
         ) : base(id)
     {
         if (startDate > endDate)
@@ -30,11 +30,17 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
         MonthlyContribution = monthlyContribution;
         EndDate = endDate;
         InvestedAmount = StartAmount;
-        Information = investmentInformation;
         
         Simulate();
         GenerateBalance();
     }
+
+    public void SetInformation(string title, EFixedIncomeOrderType type)
+    {
+        Information.Title = title;
+        Information.Type = type;
+    }
+    
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
     public decimal StartAmount { get; }
@@ -43,7 +49,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     public decimal InvestedAmount { get; private set; }
     public decimal FinalAmount { get; private set; }
     public decimal FinalAmountNet { get; private set; }
-    public InvestmentInformation? Information { get; private set; }
+    public InvestmentInformation Information { get; private set; }
     
     private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
     private readonly Dictionary<DateTime, decimal> _monthlyNetProfits = new ();

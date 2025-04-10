@@ -6,4 +6,20 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="FixedIncomeSimulation\Abstractions\" />
+      <Folder Include="FixedIncomeSimulation\Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Carter" Version="8.2.1" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
