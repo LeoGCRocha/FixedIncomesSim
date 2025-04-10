@@ -1,7 +1,8 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.Common.Extensions;
 using FixedIncome.Domain.FixedIncomes.Extensions;
 
-namespace FixedIncome.Domain.Entities;
+namespace FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
 public class FixedIncomeOrderEvent : Entity<Guid>
 {

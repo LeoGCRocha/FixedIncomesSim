@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FixedIncome.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<FixedIncomeSim> FixedIncomeSims => Set<FixedIncomeSim>();
 

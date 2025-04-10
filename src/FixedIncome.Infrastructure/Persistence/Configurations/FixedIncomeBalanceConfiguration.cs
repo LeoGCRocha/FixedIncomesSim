@@ -1,4 +1,5 @@
 using FixedIncome.Domain.Entities;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

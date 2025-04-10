@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
 using FixedIncome.Domain.Entities;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FixedIncome.Infrastructure.Persistence.Configurations;

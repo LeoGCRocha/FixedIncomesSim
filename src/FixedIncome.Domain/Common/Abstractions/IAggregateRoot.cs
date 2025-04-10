@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.Abstractions;
+namespace FixedIncome.Domain.Common.Abstractions;
 
 public interface IAggregateRoot
 {

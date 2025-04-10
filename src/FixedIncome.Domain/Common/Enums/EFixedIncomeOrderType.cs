@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.FixedIncomes.Shared;
+namespace FixedIncome.Domain.Common.Enums;
 
 public enum EFixedIncomeOrderType
 {

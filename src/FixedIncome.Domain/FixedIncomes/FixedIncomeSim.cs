@@ -1,5 +1,7 @@
-using FixedIncome.Domain.Abstractions;
+using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomes.Events;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 
 namespace FixedIncome.Domain.Entities;
 
