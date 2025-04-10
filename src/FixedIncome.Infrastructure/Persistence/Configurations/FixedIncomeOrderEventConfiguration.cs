@@ -13,7 +13,7 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
 
         builder.HasKey(f => f.Id);
 
-        builder.HasOne<FixedIncomeOrder>("_events")
+        builder.HasOne<FixedIncomeOrder>()
             .WithMany()
             .HasForeignKey("FixedIncomeId")
             .OnDelete(DeleteBehavior.Cascade);
