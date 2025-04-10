@@ -1,9 +1,9 @@
-using FixedIncome.Domain.FixedIncomes;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using FixedIncome.Domain.FixedIncomeSimulation;
 
-namespace FixedIncome.Infrastructure.Persistence.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
 
 public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncomeOrder>
 {
@@ -45,11 +45,11 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
             .IsRequired();
         
         // Shadow properties
-        builder.Property<DateTime>("created_at")
+        builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
         
-        builder.Property<DateTime>("updated_at")
+        builder.Property<DateTime>("UpdatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAddOrUpdate();
     }

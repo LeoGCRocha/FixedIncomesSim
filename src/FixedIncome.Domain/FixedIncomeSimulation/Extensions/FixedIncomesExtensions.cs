@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.FixedIncomes.Extensions;
+namespace FixedIncome.Domain.FixedIncomeSimulation.Extensions;
 
 public static class FixedIncomesExtensions
 {

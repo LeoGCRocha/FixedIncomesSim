@@ -1,10 +1,10 @@
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.Common.ValueObjects;
-using FixedIncome.Domain.FixedIncomes.Events;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
+using FixedIncome.Domain.FixedIncomeSimulation.Events;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 
-namespace FixedIncome.Domain.FixedIncomes;
+namespace FixedIncome.Domain.FixedIncomeSimulation;
 
 public sealed class FixedIncomeSim : AggregateRoot<Guid>
 {

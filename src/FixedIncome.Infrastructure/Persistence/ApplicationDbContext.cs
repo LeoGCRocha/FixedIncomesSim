@@ -1,11 +1,10 @@
-using FixedIncome.Domain.FixedIncomes;
 using Microsoft.EntityFrameworkCore;
 
 namespace FixedIncome.Infrastructure.Persistence;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public DbSet<FixedIncomeSim> FixedIncomeSims => Set<FixedIncomeSim>();
+    public DbSet<Domain.FixedIncomeSimulation.FixedIncomeSim> FixedIncomeSims => Set<Domain.FixedIncomeSimulation.FixedIncomeSim>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

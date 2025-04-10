@@ -1,9 +1,8 @@
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.Common.Enums;
 using FixedIncome.Domain.Common.Extensions;
-using FixedIncome.Domain.FixedIncomes.Extensions;
 
-namespace FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
+namespace FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 
 public class FixedIncomeOrder : Entity<Guid>
 {

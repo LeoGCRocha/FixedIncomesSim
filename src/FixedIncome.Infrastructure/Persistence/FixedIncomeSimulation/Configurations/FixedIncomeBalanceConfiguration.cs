@@ -1,9 +1,8 @@
-using FixedIncome.Domain.FixedIncomes;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FixedIncome.Infrastructure.Persistence.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
 
 public class FixedIncomeBalanceConfiguration : IEntityTypeConfiguration<FixedIncomeBalance>
 {
@@ -11,7 +10,7 @@ public class FixedIncomeBalanceConfiguration : IEntityTypeConfiguration<FixedInc
     {
         builder.ToTable("fixed_income_balance");
 
-        builder.HasOne<FixedIncomeSim>()
+        builder.HasOne<Domain.FixedIncomeSimulation.FixedIncomeSim>()
             .WithMany()
             .HasForeignKey("FixedIncomeId") //  On delete FixedIncomeId
             .OnDelete(DeleteBehavior.Cascade); // Will delete relations with FixedIncomeBalance
@@ -22,11 +21,11 @@ public class FixedIncomeBalanceConfiguration : IEntityTypeConfiguration<FixedInc
         builder.Property(f => f.Profit)
             .IsRequired();
 
-        builder.Property<DateTime>("created_at")
+        builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
 
-        builder.Property<DateTime>("updated_at")
+        builder.Property<DateTime>("UpdatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAddOrUpdate();
     }

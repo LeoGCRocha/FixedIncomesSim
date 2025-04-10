@@ -1,10 +1,10 @@
-using FixedIncome.Domain.FixedIncomes;
+using FixedIncome.Domain.FixedIncomeSimulation;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
-using FixedIncome.Domain.FixedIncomes.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FixedIncome.Infrastructure.Persistence.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
 
 public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeSim>
 {
@@ -56,12 +56,12 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
         builder.HasIndex(f => f.StartDate);
         
         // Shadow columns
-        builder.Property<DateTime>("created_at")
+        builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
-        builder.HasIndex("created_at");
+        builder.HasIndex("CreatedAt");
 
-        builder.Property<DateTime>("update_at")
+        builder.Property<DateTime>("UpdatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAddOrUpdate();
     }

@@ -1,6 +1,6 @@
 using FixedIncome.Domain.Common.Abstractions;
 
-namespace FixedIncome.Domain.FixedIncomes.FixedIncomeBalances;
+namespace FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 
 public class FixedIncomeBalance : Entity<Guid>
 {

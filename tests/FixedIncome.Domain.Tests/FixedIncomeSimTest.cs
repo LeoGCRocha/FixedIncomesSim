@@ -1,4 +1,4 @@
-using FixedIncome.Domain.FixedIncomes;
+using FixedIncome.Domain.FixedIncomeSimulation;
 using FluentAssertions;
 
 namespace FixedIncome.Domain.Tests;
