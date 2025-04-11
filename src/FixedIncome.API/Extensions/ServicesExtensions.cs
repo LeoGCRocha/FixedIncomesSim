@@ -1,7 +1,9 @@
+using Carter;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation.Repository;
 using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
+using FluentValidation;
 
 namespace FixedIncome.API.Extensions;
 
