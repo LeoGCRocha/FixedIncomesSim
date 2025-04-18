@@ -1,4 +1,4 @@
-namespace FixedIncome.API.Configuration;
+namespace FixedIncome.Infrastructure.Configuration;
 
 public sealed class PostgresConfiguration : IBaseConfiguration
 {

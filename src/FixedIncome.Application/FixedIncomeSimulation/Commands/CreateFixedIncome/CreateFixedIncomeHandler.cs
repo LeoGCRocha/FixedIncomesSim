@@ -2,7 +2,6 @@ using FixedIncome.Application.FixedIncomeSimulation.DTOs;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using MediatR;
-using Microsoft.VisualBasic;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 

@@ -46,8 +46,8 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     public decimal MonthlyYield { get; }
     public decimal MonthlyContribution { get; private set; }
     public decimal InvestedAmount { get; private set; }
-    public decimal FinalAmount { get; private set; }
-    public decimal FinalAmountNet { get; private set; }
+    public decimal FinalGrossAmount { get; private set; }
+    public decimal FinalNetAmount { get; private set; }
     public InvestmentInformation Information { get; private set; }
     
     private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
@@ -89,8 +89,8 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
             currentDate = currentDate.AddMonths(1);
         }
 
-        FinalAmount = InvestedAmount + _monthlyProfits.Sum(e => e.Value);
-        FinalAmountNet = InvestedAmount + _orders.Sum(e => e.NetProfit());
+        FinalGrossAmount = InvestedAmount + _monthlyProfits.Sum(e => e.Value);
+        FinalNetAmount = InvestedAmount + _orders.Sum(e => e.NetProfit());
         
         RaiseDomainEvent(new FixedIncomeSimulationEnded(Id, nameof(FixedIncomeSim)));
     }

@@ -29,6 +29,12 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
         builder.Property(f => f.MonthlyYield)
             .IsRequired();
 
+        builder.Property(f => f.FinalGrossAmount)
+            .HasDefaultValue(0);
+
+        builder.Property(f => f.FinalNetAmount)
+            .HasDefaultValue(0);
+
         builder
             .HasMany<FixedIncomeOrder>("_orders")
             .WithOne()
