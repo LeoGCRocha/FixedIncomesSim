@@ -31,6 +31,8 @@ public class CreateFixedIncomeHandler : IRequestHandler<CreateFixedIncomeCommand
             fixedIncome.SetInformation(request.Information.Title, request.Information.Type);
         
         await _unitOfWork.FixedIncomeRepository.AddAsync(fixedIncome);
+        await _unitOfWork.CommitAsync();
+        
         return new CreateFixedIncomeCommandResponse(fixedIncome.Id);
     }
 }

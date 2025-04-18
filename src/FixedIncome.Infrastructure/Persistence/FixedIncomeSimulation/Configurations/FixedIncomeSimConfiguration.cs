@@ -40,6 +40,7 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
             .HasForeignKey("FixedIncomeId")
             .OnDelete(DeleteBehavior.Cascade);
 
+        // TODO: Change this to can be null
         builder.OwnsOne(f => f.Information)
             .Property(i => i.Title)
             .HasColumnName("investiment_title")

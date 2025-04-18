@@ -13,8 +13,8 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
         builder.HasKey(f => f.Id);
 
         builder.HasOne<FixedIncomeOrder>()
-            .WithMany()
-            .HasForeignKey("FixedIncomeId")
+            .WithMany("_events")
+            .HasForeignKey("FixedIncomeOrderId")
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(f => f.StartReferenceDate)

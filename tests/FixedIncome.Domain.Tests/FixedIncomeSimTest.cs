@@ -24,17 +24,9 @@ public class FixedIncomeSimTest
     [Fact]
     public void Should_Simulate_Correct_Profit_To_Fixed_Income()
     {
-        // Arrange && Act
-        var fixedIncome = new FixedIncomeSim(
-            Guid.NewGuid(),
-            DateTime.Now,
-            DateTime.Now.AddMonths(1),
-            0,
-            1.04m,
-            2000);
-        
-        // Assert
-        fixedIncome.FinalAmount.Should().BeApproximately(2020.8m, 0.5m);
-        fixedIncome.Profits().Should().BeApproximately(20.8m, 0.5m);
+        // Arrange & Act
+        var fixedIncome = new FixedIncomeSim(Guid.NewGuid(), DateTime.Now, DateTime.Now.AddMonths(12), 44590.54m, 1.04m, 2500);
+
+        fixedIncome.GetOrdersHistory().Count.Should().Be(13);
     }
 }

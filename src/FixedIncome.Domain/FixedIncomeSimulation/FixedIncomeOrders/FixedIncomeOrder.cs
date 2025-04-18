@@ -80,8 +80,8 @@ public class FixedIncomeOrder : Entity<Guid>
         return  allTimeProfit - allTimeProfit * (Tax / 100);
     }
     
-    internal decimal ProfitUntilPeriod(DateTime endDate)
+    internal decimal PeriodProfit(DateTime startDate, DateTime endDate)
     {
-        return _events.Where(e => e.EndReferenceDate <= endDate).Sum(e => e.Profit);
+        return _events.Where(e => e.StartReferenceDate >= startDate && e.EndReferenceDate <= endDate).Sum(e => e.Profit);
     }
 }

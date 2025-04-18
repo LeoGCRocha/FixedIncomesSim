@@ -14,5 +14,5 @@ public class FixedIncomeBalance : Entity<Guid>
         Profit = profit;
     }
     public void AddAmount(decimal amount) => Amount += amount;
-    public void AddProfit(decimal profit) => Profit += profit;
+    public void SetProfit(decimal profit) => Profit = profit;
 }

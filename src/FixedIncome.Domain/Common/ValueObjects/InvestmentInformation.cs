@@ -5,7 +5,7 @@ namespace FixedIncome.Domain.Common.ValueObjects;
 
 public class InvestmentInformation : ValueObject
 {
-    public required string Title { get; set; }
+    public string Title { get; set; }
     public EFixedIncomeOrderType Type { get;  set; }
     
     public InvestmentInformation(string title, EFixedIncomeOrderType type)
@@ -13,7 +13,6 @@ public class InvestmentInformation : ValueObject
         Title = title;
         Type = type;
     }
-
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Title;

@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 services.AddApplicationDependencyInjection();
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
