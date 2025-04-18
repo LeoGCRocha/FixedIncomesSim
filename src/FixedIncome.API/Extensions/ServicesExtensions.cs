@@ -1,0 +1,19 @@
+using Carter;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Infrastructure.Persistence;
+using FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
+using FluentValidation;
+
+namespace FixedIncome.API.Extensions;
+
+public static class ServicesExtensions
+{
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IFixedIncomeRepository, FixedIncomeRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
+        return services;
+    }
+}
