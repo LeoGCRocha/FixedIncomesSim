@@ -35,12 +35,21 @@ public class DapperDbContext : IDisposable, IDapperDbContext
         }
     }
 
-    public async Task<TResponse?> ExecuteAsync<TResponse>(string query, object? parameters)
+    public async Task<TResponse?> GetFirstAsync<TResponse>(string query, object? parameters = null)
     {
         if (_connection is null)
             Connection();
         
         var response = await _connection!.QueryFirstOrDefaultAsync<TResponse>(query, parameters);
+        return response;
+    }
+
+    public async Task<IEnumerable<TListResponse>> GetAsync<TListResponse>(string query, object? parameters = null)
+    {
+        if (_connection is null)
+            Connection();
+
+        var response = await _connection!.QueryAsync<TListResponse>(query, parameters);
         return response;
     }
 

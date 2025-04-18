@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 
 namespace FixedIncome.Application.FixedIncomeSimulation;
 
@@ -24,7 +25,8 @@ public class FixedIncomeSimulationModule : ICarterModule
         app.MapGet("/simulation", async ([AsParameters] GetFixedIncomeQuery query, IMediator mediator) =>
         {
             var response = await mediator.Send(query);
-            return Results.Ok(response);
+            
+            return response is not null ? Results.Ok(response) : Results.NotFound();
         }).Produces<FixedIncomeResponse>()
         .WithTags("Simulation");
     }
