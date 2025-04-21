@@ -1,5 +1,6 @@
 ﻿using Carter;
 using FixedIncome.API.Extensions;
+using FixedIncome.API.Middlewares;
 using FixedIncome.Application.Configuration;
 using FixedIncome.Infrastructure.Persistence;
 
@@ -30,5 +31,6 @@ if (app.Environment.IsDevelopment())
     dbContext.Database.EnsureCreated();
 }
 
+app.UseMiddleware<EndpointTimeLogger>();
 app.MapCarter();
 app.Run();

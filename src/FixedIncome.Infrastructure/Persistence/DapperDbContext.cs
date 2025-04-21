@@ -1,8 +1,8 @@
-using System.Data;
 using Dapper;
 using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using Microsoft.Extensions.Logging;
+using System.Data;
 using Npgsql;
 
 namespace FixedIncome.Infrastructure.Persistence;

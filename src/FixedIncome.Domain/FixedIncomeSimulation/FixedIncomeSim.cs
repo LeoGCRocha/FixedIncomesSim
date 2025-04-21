@@ -68,12 +68,13 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
                 order = new FixedIncomeOrder(Guid.NewGuid(), currentDate, EndDate, MonthlyContribution,
                     MonthlyYield);
             }
+            
             InvestedAmount += MonthlyContribution;
             _orders.Add(order);
             
             currentDate = currentDate.AddMonths(1);
         }
-
+        
         currentDate = StartDate;
         while (currentDate < EndDate)
         {
@@ -85,7 +86,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
                 else
                     _monthlyProfits[currentDate.Date] = profitPeriod;
             }
-
+        
             currentDate = currentDate.AddMonths(1);
         }
 

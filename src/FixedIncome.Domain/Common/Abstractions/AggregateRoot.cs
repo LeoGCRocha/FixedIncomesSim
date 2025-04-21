@@ -16,5 +16,6 @@ public class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
     public void RaiseDomainEvent(DomainEvent dE)
     {
         _events.Add(dE);
+        // Need to clean Domain Events;
     }
 }
