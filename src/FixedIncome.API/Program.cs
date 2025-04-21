@@ -2,6 +2,8 @@
 using FixedIncome.API.Extensions;
 using FixedIncome.API.Middlewares;
 using FixedIncome.Application.Configuration;
+using FixedIncome.Infrastructure.BackgroundJobs;
+using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 using FixedIncome.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,11 @@ var services = builder.Services;
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 services.AddApplicationDependencyInjection();
+
+services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+services.AddHostedService<BackgroundJobs>();
+
+services.AddServices();
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();

@@ -2,7 +2,7 @@ namespace FixedIncome.Domain.Common.Abstractions;
 
 public class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
 {
-    private readonly List<DomainEvent> _events = [];
+    private List<DomainEvent> _events = [];
     
     protected AggregateRoot(TId id) : base(id)
     {
@@ -16,6 +16,10 @@ public class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
     public void RaiseDomainEvent(DomainEvent dE)
     {
         _events.Add(dE);
-        // Need to clean Domain Events;
+    }
+
+    public void ClearDomainEvents()
+    {
+        _events = [];
     }
 }
