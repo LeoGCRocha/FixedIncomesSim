@@ -25,6 +25,8 @@ public class SimulationEndedEventHandler : INotificationHandler<FixedIncomeSimul
             Console.WriteLine("Email was successfully sended.");
         }, cancellationToken);
         
+        // TODO: Send message to QUEUE ON Rabbit / Kafka and start treat on the consumer;
+        
         return Unit.Task;
     }
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.Repository;
 using Microsoft.EntityFrameworkCore;
