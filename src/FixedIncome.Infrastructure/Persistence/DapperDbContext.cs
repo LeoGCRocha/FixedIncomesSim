@@ -3,6 +3,7 @@ using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using Microsoft.Extensions.Logging;
 using System.Data;
+using Microsoft.Extensions.Options;
 using Npgsql;
 
 namespace FixedIncome.Infrastructure.Persistence;
@@ -13,9 +14,9 @@ public class DapperDbContext : IDisposable, IDapperDbContext
     private readonly string _connectionString;
     private readonly ILogger<DapperDbContext> _logger;
 
-    public DapperDbContext(IBaseConfiguration configuration, ILogger<DapperDbContext> logger)
+    public DapperDbContext(IOptions<RabbitMqConfiguration> configuration, ILogger<DapperDbContext> logger)
     {
-        _connectionString = configuration.GetConnectionString();
+        _connectionString = configuration.Value.GetConnectionString();
         _logger = logger;
     }
 

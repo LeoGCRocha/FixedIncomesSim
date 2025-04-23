@@ -17,13 +17,14 @@ services.AddApplicationDependencyInjection();
 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 services.AddHostedService<BackgroundJobs>();
 
-services.AddServices();
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddCarter();
 
-builder.AddDbServices(builder.Configuration);
+services.AddConfigurations(builder.Configuration);
+services.AddServices();
+services.AddDbServices();
 
 var app = builder.Build();
 

@@ -1,20 +1,25 @@
 using MediatR;
 using FixedIncome.Domain.FixedIncomeSimulation.Events;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
+using FixedIncome.Infrastructure.Messaging.Abstractions;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 
 public class SimulationEndedEventHandler : INotificationHandler<FixedIncomeSimulationEnded>
 {
     private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+    private readonly IProducer _producer;
 
-    public SimulationEndedEventHandler(IBackgroundTaskQueue backgroundTaskQueue)
+
+    public SimulationEndedEventHandler(IBackgroundTaskQueue backgroundTaskQueue, IProducer producer)
     {
         _backgroundTaskQueue = backgroundTaskQueue;
+        _producer = producer;
     }
 
     public Task Handle(FixedIncomeSimulationEnded notification, CancellationToken cancellationToken)
     {
+        // TODO Add maybe outbox pattern here
         _backgroundTaskQueue.EnqueueNewTask(async () =>
         {
             if (cancellationToken.IsCancellationRequested)
@@ -25,7 +30,7 @@ public class SimulationEndedEventHandler : INotificationHandler<FixedIncomeSimul
             Console.WriteLine("Email was successfully sended.");
         }, cancellationToken);
         
-        // TODO: Send message to QUEUE ON Rabbit / Kafka and start treat on the consumer;
+        _producer.Publish(notification);
         
         return Unit.Task;
     }
