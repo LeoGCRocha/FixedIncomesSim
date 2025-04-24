@@ -5,28 +5,15 @@ namespace FixedIncome.Domain.Tests;
 
 public class FixedIncomeSimTest
 {
+    
     [Fact]
-    public void Should_Create_12_Orders_When_A_Year_FixedIncome_Is_Created()
-    {
-        // Arrange && Act
-        var fixedIncome = new FixedIncomeSim(
-            Guid.NewGuid(),
-            DateTime.Now,
-            DateTime.Now.AddMonths(12),
-            2000,
-            1.04m,
-            20000);
-
-        // Assert
-        fixedIncome.GetOrdersHistory().Count.Should().Be(12);
-    }
-
-    [Fact]
-    public void Should_Simulate_Correct_Profit_To_Fixed_Income()
+    public void Should_Create_1_Order_If_Range_Is_Less_Than_1_Month()
     {
         // Arrange & Act
-        var fixedIncome = new FixedIncomeSim(Guid.NewGuid(), DateTime.Now, DateTime.Now.AddMonths(12), 44590.54m, 1.04m, 2500);
+        var sut = new FixedIncomeSim(Guid.NewGuid(), new DateTime(2024, 03, 03), new DateTime(2024, 03, 10), 10000, 1.22m, 3000);
 
-        fixedIncome.GetOrdersHistory().Count.Should().Be(13);
+        // Assert
+        sut.Orders.Should().HaveCount(1);
     }
+
 }

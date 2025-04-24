@@ -32,6 +32,7 @@ public class FixedIncomeOrder : Entity<Guid>
         GenerateEvents();
     }
 
+    public IReadOnlyList<FixedIncomeOrderEvent> Events => _events.AsReadOnly();
     private ETaxGroup GetTaxGroupFromDatesDiff()
     {
         var daysDiff = StartDate.AbsDiffOnDays(EndDate);
