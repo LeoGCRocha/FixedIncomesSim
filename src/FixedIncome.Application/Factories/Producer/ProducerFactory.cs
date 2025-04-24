@@ -4,13 +4,26 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FixedIncome.Application.Factories.Producer;
 
-public class ProducerFactory(IServiceProvider provider) : IProducerFactory
+public class ProducerFactory : IProducerFactory
 {
+    private readonly IServiceProvider _provider;
+    private readonly Dictionary<string, Type> _producers;
+    public ProducerFactory(IServiceProvider provider)
+    {
+        _provider = provider;
+        _producers = new Dictionary<string, Type>()
+        {
+            { nameof(SimulationEndedProducer), typeof(SimulationEndedProducer) }
+        };
+    }
+    
     public IProducer ProducerType(string type)
     {
-        if (type == nameof(SimulationCreatedProducer))
-            return provider.GetRequiredService<SimulationCreatedProducer>();
+        if (_producers.TryGetValue(type, out var producerType))
+        {
+            return (IProducer) _provider.GetRequiredService(producerType);
+        }
 
-        throw new Exception("Invalid producer type");
+        throw new ArgumentException("Invalid producer type");
     }
-}
+}   

@@ -1,3 +1,4 @@
+using FixedIncome.Domain.Common.Enums;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using FluentAssertions;
 
@@ -13,5 +14,17 @@ public class FixedIncomeOrderTests
 
         // Assert
         sut.Events.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void Should_Have_15_Percent_Tax_When_The_Order_Have_More_Than_3_Years()
+    {
+        // Arrange & Act 
+        var startDate = new DateTime(2024, 03, 03);
+        var sut = new FixedIncomeOrder(Guid.NewGuid(), startDate, startDate.AddYears(3), 3000, 1.22m);
+        
+        // Assert
+        sut.Tax.Should().Be(15);
+        sut.TaxGroup.Should().Be(ETaxGroup.After720Days);
     }
 }

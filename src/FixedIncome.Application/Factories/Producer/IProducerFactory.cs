@@ -1,6 +1,6 @@
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 
-namespace FixedIncome.Application.Factories;
+namespace FixedIncome.Application.Factories.Producer;
 
 public interface IProducerFactory
 {

@@ -43,7 +43,7 @@ public static class ServicesExtensions
 
         services.AddSingleton<IMessageBrokerConnection, MessageBrokerConnection>();
 
-        services.AddScoped<IProducer, SimulationCreatedProducer>();
+        services.AddScoped<SimulationEndedProducer>();
         services.AddScoped<IProducerFactory, ProducerFactory>();
 
         return services;
