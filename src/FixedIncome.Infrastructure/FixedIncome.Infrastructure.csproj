@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
@@ -15,10 +16,17 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.15\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

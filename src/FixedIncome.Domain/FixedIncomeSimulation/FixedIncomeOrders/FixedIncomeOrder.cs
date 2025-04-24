@@ -82,6 +82,7 @@ public class FixedIncomeOrder : Entity<Guid>
     
     internal decimal PeriodProfit(DateTime startDate, DateTime endDate)
     {
-        return _events.Where(e => e.StartReferenceDate >= startDate && e.EndReferenceDate <= endDate).Sum(e => e.Profit);
+        return _events.Where(e => e.StartReferenceDate.Date >= startDate && e.EndReferenceDate.Date <= endDate)
+            .Sum(e => e.Profit);
     }
 }
