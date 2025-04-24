@@ -42,3 +42,5 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<EndpointTimeLogger>();
 app.MapCarter();
 app.Run();
+
+public partial class Program() { }

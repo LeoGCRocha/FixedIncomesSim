@@ -13,7 +13,7 @@ public class FixedIncomeSimTest
         var sut = new FixedIncomeSim(Guid.NewGuid(), new DateTime(2024, 03, 03), new DateTime(2024, 03, 10), 10000, 1.22m, 3000);
 
         // Assert
-        sut.Orders.Should().HaveCount(1);
+        sut.GetOrders.Should().HaveCount(1);
     }
 
 }

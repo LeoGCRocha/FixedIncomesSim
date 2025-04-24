@@ -13,7 +13,7 @@ public class FixedIncomeOrderTests
         var sut = new FixedIncomeOrder(Guid.NewGuid(), new DateTime(2024, 03, 03), new DateTime(2024, 03, 10), 3000, 1.22m);
 
         // Assert
-        sut.Events.Should().HaveCount(1);
+        sut.GetEvents.Should().HaveCount(1);
     }
 
     [Fact]

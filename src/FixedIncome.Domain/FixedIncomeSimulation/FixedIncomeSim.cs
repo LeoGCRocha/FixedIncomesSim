@@ -52,7 +52,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     
     private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
 
-    public IReadOnlyList<FixedIncomeOrder> Orders => _orders.AsReadOnly();
+    public IReadOnlyList<FixedIncomeOrder> GetOrders => _orders.AsReadOnly();
     
     private void Simulate()
     {

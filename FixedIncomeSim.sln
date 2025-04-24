@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixedIncome.Integration.Tests", "tests\FixedIncome.Integration.Tests\FixedIncome.Integration.Tests.csproj", "{51C12BE3-57E7-48DE-B6AF-3B79C155556F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{6C1FC4E8-2B09-4D05-8CF2-5826AAE9EB20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C1FC4E8-2B09-4D05-8CF2-5826AAE9EB20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C1FC4E8-2B09-4D05-8CF2-5826AAE9EB20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C12BE3-57E7-48DE-B6AF-3B79C155556F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C12BE3-57E7-48DE-B6AF-3B79C155556F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C12BE3-57E7-48DE-B6AF-3B79C155556F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C12BE3-57E7-48DE-B6AF-3B79C155556F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{98E9078A-62AA-4E5B-850A-401CF12ACE75} = {399ADA1B-3557-4481-8DCE-F18AD0BA54D0}
@@ -59,5 +65,6 @@ Global
 		{45B8FC68-FFEC-4FC0-84FC-A9931267FCF9} = {399ADA1B-3557-4481-8DCE-F18AD0BA54D0}
 		{D07D0DA8-1ACD-4A03-BA96-3E9751C07E1D} = {399ADA1B-3557-4481-8DCE-F18AD0BA54D0}
 		{6C1FC4E8-2B09-4D05-8CF2-5826AAE9EB20} = {9B308472-F615-4DF7-B45B-8E3406921E34}
+		{51C12BE3-57E7-48DE-B6AF-3B79C155556F} = {9B308472-F615-4DF7-B45B-8E3406921E34}
 	EndGlobalSection
 EndGlobal
