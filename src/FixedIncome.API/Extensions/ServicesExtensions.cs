@@ -1,17 +1,16 @@
-using FixedIncome.Application.Factories;
-using FixedIncome.Application.Factories.Producer;
+using RabbitMQ.Client;
+using Microsoft.Extensions.Options;
+using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Domain.Common.Abstractions;
-using FixedIncome.Domain.FixedIncomeSimulation.Repository;
 using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.DomainEvents;
-using FixedIncome.Infrastructure.DomainEvents.Abstractions;
-using FixedIncome.Infrastructure.Messaging.Abstractions;
+using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ;
+using FixedIncome.Infrastructure.Messaging.Abstractions;
+using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
-using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
-using Microsoft.Extensions.Options;
-using RabbitMQ.Client;
 
 namespace FixedIncome.API.Extensions;
 
@@ -40,9 +39,7 @@ public static class ServicesExtensions
             
             return factory.CreateConnection();
         });
-
         services.AddSingleton<IMessageBrokerConnection, MessageBrokerConnection>();
-
         services.AddScoped<SimulationEndedProducer>();
         services.AddScoped<IProducerFactory, ProducerFactory>();
 

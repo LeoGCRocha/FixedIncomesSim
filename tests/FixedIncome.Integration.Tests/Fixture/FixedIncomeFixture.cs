@@ -1,4 +1,6 @@
+using MediatR;
 using FixedIncome.Infrastructure.Persistence;
+using FixedIncome.Domain.FixedIncomeSimulation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FixedIncome.Integration.Tests.Fixture;
@@ -11,7 +13,6 @@ public class FixedIncomeFixture : IAsyncDisposable
 
     public FixedIncomeFixture()
     {
-        Console.WriteLine("ok");
         _webAppFactory = new WebAppFactory<Program>();
         _serviceProvider = _webAppFactory.Services.GetRequiredService<IServiceScopeFactory>();
         _scope = _serviceProvider.CreateScope();
@@ -27,5 +28,22 @@ public class FixedIncomeFixture : IAsyncDisposable
     {
         await _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
             .Database.EnsureDeletedAsync();
+    }
+
+    public async Task CreateFixedIncome(FixedIncomeSim simulation)
+    {
+        var context = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await context.AddAsync(simulation);
+        await context.SaveChangesAsync();
+    }
+    
+    public async Task<object?> SendCommand<T>(T command)
+    {
+        if (command is null)
+            throw new ArgumentException("Command cannot be null");
+        
+        var mediator = _scope.ServiceProvider.GetRequiredService<IMediator>();
+        
+        return await mediator.Send(command);
     }
 }

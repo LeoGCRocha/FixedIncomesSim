@@ -14,7 +14,7 @@ public class DapperDbContext : IDisposable, IDapperDbContext
     private readonly string _connectionString;
     private readonly ILogger<DapperDbContext> _logger;
 
-    public DapperDbContext(IOptions<RabbitMqConfiguration> configuration, ILogger<DapperDbContext> logger)
+    public DapperDbContext(IOptions<PostgresConfiguration> configuration, ILogger<DapperDbContext> logger)
     {
         _connectionString = configuration.Value.GetConnectionString();
         _logger = logger;

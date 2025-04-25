@@ -14,7 +14,7 @@ public class SimulationEndedEventHandler : INotificationHandler<FixedIncomeSimul
     public SimulationEndedEventHandler(IBackgroundTaskQueue backgroundTaskQueue, IProducerFactory factory)
     {
         _backgroundTaskQueue = backgroundTaskQueue;
-        _producer = factory.ProducerType(nameof(SimulationEndedProducer));
+        _producer = factory.GetProducerService(ProducerType.SimulationEnded);
     }
 
     public Task Handle(FixedIncomeSimulationEnded notification, CancellationToken cancellationToken)

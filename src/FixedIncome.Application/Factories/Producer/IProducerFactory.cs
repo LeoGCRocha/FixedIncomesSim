@@ -4,5 +4,5 @@ namespace FixedIncome.Application.Factories.Producer;
 
 public interface IProducerFactory
 {
-    IProducer ProducerType(string type);
+    IProducer GetProducerService(ProducerType type);
 }
