@@ -1,21 +1,25 @@
-using System.Diagnostics;
-using FixedIncome.Application.FixedIncomeSimulation.DTOs;
-using FixedIncome.Domain.Common.Abstractions;
-using FixedIncome.Domain.FixedIncomeSimulation;
-using FixedIncome.Infrastructure.Persistence.Abstractions;
 using MediatR;
+using System.Diagnostics;
+using FixedIncome.Application.Factories.Outbox;
+using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
 using Microsoft.Extensions.Logging;
+using FixedIncome.Domain.FixedIncomeSimulation;
+using FixedIncome.Application.FixedIncomeSimulation.DTOs;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 
 public class CreateFixedIncomeHandler : IRequestHandler<CreateFixedIncomeCommand, CreateFixedIncomeCommandResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IOutboxFactory _outboxFactory;
+
     private readonly ILogger<CreateFixedIncomeHandler> _logger;
 
-    public CreateFixedIncomeHandler(IUnitOfWork unitOfWork, ILogger<CreateFixedIncomeHandler> logger)
+    public CreateFixedIncomeHandler(IUnitOfWork unitOfWork, IOutboxFactory outboxFactory, ILogger<CreateFixedIncomeHandler> logger)
     {
         _unitOfWork = unitOfWork;
+        _outboxFactory = outboxFactory;
         _logger = logger;
     }
 
@@ -37,6 +41,13 @@ public class CreateFixedIncomeHandler : IRequestHandler<CreateFixedIncomeCommand
         var stopwatch = Stopwatch.StartNew();
         
         await _unitOfWork.FixedIncomeRepository.AddAsync(fixedIncome);
+
+        await _unitOfWork.OutboxPatternRepository.AddAsync(
+            _outboxFactory.CreateOutboxMessage(OutboxMessageTypes.Email, fixedIncome.Id));
+
+        await _unitOfWork.OutboxPatternRepository.AddAsync(
+            _outboxFactory.CreateOutboxMessage(OutboxMessageTypes.File, fixedIncome.Id));
+
         await _unitOfWork.CommitAsync();
         
         stopwatch.Stop();

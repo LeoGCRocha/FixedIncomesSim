@@ -3,7 +3,7 @@ using FixedIncome.Domain.Common.Abstractions;
 
 namespace FixedIncome.Domain.FixedIncomeSimulation.Events;
 
-public class FixedIncomeSimulationEnded : DomainEvent, INotification
+public class FixedIncomeSimulationEnded : DomainEvent
 {
     public FixedIncomeSimulationEnded(Guid id, string type) : base(id, type)
     {
