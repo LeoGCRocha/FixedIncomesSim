@@ -1,4 +1,3 @@
-using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 using Microsoft.EntityFrameworkCore;

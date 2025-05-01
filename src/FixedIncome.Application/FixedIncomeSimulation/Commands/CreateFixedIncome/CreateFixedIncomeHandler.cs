@@ -12,7 +12,6 @@ public class CreateFixedIncomeHandler : IRequestHandler<CreateFixedIncomeCommand
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<CreateFixedIncomeHandler> _logger;
 
-
     public CreateFixedIncomeHandler(IUnitOfWork unitOfWork, ILogger<CreateFixedIncomeHandler> logger)
     {
         _unitOfWork = unitOfWork;

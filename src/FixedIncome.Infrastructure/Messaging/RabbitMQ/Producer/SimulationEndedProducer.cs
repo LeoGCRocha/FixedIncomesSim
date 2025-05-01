@@ -6,11 +6,11 @@ using FixedIncome.Infrastructure.Messaging.Abstractions;
 
 namespace FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
 
-public class SimulationCreatedProducer : IProducer
+public class SimulationEndedProducer : IProducer
 {
     private readonly IModel _channel;
 
-    public SimulationCreatedProducer(IMessageBrokerConnection connection)
+    public SimulationEndedProducer(IMessageBrokerConnection connection)
     {
         _channel = connection.CreateModel();
         _channel.QueueDeclare(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);

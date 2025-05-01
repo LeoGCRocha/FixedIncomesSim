@@ -1,5 +1,5 @@
-using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.Common.Enums;
+using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.Common.Extensions;
 
 namespace FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
@@ -15,6 +15,7 @@ public class FixedIncomeOrder : Entity<Guid>
     public decimal MonthlyYield { get; private set; }
     
     private readonly List<FixedIncomeOrderEvent> _events = [];
+    public IReadOnlyList<FixedIncomeOrderEvent> GetEvents => _events.AsReadOnly();
     public FixedIncomeOrder(Guid id, 
         DateTime startDate, 
         DateTime endDate, 

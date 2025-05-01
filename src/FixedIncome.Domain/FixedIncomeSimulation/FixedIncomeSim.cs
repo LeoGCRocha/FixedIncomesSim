@@ -33,6 +33,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
         
         Simulate();
         GenerateBalance();
+        SetInformation(string.Empty, EFixedIncomeOrderType.Cdb);
     }
 
     public void SetInformation(string title, EFixedIncomeOrderType type)
@@ -51,6 +52,8 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     public InvestmentInformation Information { get; private set; }
     
     private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
+
+    public IReadOnlyList<FixedIncomeOrder> GetOrders => _orders.AsReadOnly();
     
     private void Simulate()
     {
@@ -81,10 +84,8 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
             foreach (var order in _orders)
             {
                 var profitPeriod = order.PeriodProfit(currentDate.Date, currentDate.Date.AddMonths(1));
-                if (_monthlyProfits.ContainsKey(currentDate.Date))
+                if (!_monthlyProfits.TryAdd(currentDate.Date, profitPeriod))
                     _monthlyProfits[currentDate.Date] += profitPeriod;
-                else
-                    _monthlyProfits[currentDate.Date] = profitPeriod;
             }
         
             currentDate = currentDate.AddMonths(1);
@@ -115,20 +116,5 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
             currentDate = currentDate.AddMonths(1);
             count++;
         }
-    }
-
-    public IReadOnlyList<FixedIncomeBalance> GetBalancesHistory()
-    {
-        return _balances.AsReadOnly();
-    }
-
-    public IReadOnlyList<FixedIncomeOrder> GetOrdersHistory()
-    {
-        return _orders.AsReadOnly();
-    }
-
-    public decimal Profits()
-    {
-        return _monthlyProfits.Sum(e => e.Value);
     }
 }

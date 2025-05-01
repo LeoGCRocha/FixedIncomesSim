@@ -1,16 +1,30 @@
+using Microsoft.Extensions.DependencyInjection;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FixedIncome.Application.Factories.Producer;
 
-public class ProducerFactory(IServiceProvider provider) : IProducerFactory
+public class ProducerFactory : IProducerFactory
 {
-    public IProducer ProducerType(string type)
-    {
-        if (type == nameof(SimulationCreatedProducer))
-            return provider.GetRequiredService<SimulationCreatedProducer>();
+    private readonly IServiceProvider _provider;
+    private readonly Dictionary<ProducerType, Type> _producers;
 
-        throw new Exception("Invalid producer type");
+    public ProducerFactory(IServiceProvider provider)
+    {
+        _provider = provider;
+        _producers = new Dictionary<ProducerType, Type>()
+        {
+            { ProducerType.SimulationEnded, typeof(SimulationEndedProducer) }
+        };
     }
-}
+    
+    public IProducer GetProducerService(ProducerType type)
+    {
+        if (_producers.TryGetValue(type, out var producerType))
+        {
+            return (IProducer) _provider.GetRequiredService(producerType);
+        }
+
+        throw new ArgumentException("Invalid producer type");
+    }
+}   
