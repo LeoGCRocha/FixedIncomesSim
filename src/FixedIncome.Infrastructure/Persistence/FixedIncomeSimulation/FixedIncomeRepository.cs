@@ -1,19 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.Repository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
 
 public class FixedIncomeRepository : IFixedIncomeRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly ILogger<FixedIncomeRepository> _logger;
 
-    public FixedIncomeRepository(ApplicationDbContext dbContext, ILogger<FixedIncomeRepository> logger)
+    public FixedIncomeRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
-        _logger = logger;
     }
 
     public  async Task<FixedIncomeSim> AddAsync(FixedIncomeSim fixedIncomeToAdd)
@@ -23,12 +20,12 @@ public class FixedIncomeRepository : IFixedIncomeRepository
         return fixedIncomeToAdd;
     }
 
-    public async Task<FixedIncomeSim?> DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         var incomeSim = await _dbContext.FixedIncomeSims.FirstOrDefaultAsync(f => f.Id == id);
-        if (incomeSim is null) return incomeSim;
+        if (incomeSim is null) 
+            return;
         
         _dbContext.FixedIncomeSims.Remove(incomeSim);
-        return incomeSim;
     }
 }

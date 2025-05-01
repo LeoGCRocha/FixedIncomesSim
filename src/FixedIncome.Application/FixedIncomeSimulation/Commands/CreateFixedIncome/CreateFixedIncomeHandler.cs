@@ -2,6 +2,7 @@ using System.Diagnostics;
 using FixedIncome.Application.FixedIncomeSimulation.DTOs;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

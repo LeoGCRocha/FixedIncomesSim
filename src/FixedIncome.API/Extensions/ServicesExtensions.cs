@@ -10,6 +10,7 @@ using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation.Repository;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
 
 namespace FixedIncome.API.Extensions;

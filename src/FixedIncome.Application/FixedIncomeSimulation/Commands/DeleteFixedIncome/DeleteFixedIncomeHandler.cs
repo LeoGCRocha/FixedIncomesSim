@@ -1,4 +1,5 @@
 using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 using MediatR;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.DeleteFixedIncome;
@@ -14,6 +15,6 @@ public class DeleteFixedIncomeHandler : IRequestHandler<DeleteFixedIncomeCommand
 
     public async Task Handle(DeleteFixedIncomeCommand request, CancellationToken cancellationToken)
     {
-        var fixedIncome = await _unitOfWork.FixedIncomeRepository.DeleteAsync(request.Id);
+       await _unitOfWork.FixedIncomeRepository.DeleteAsync(request.Id);
     }
 }

@@ -14,7 +14,7 @@ public class FixedIncomeBalanceModule : ICarterModule
         app.MapGet("balance", async ([AsParameters] GetFixedBalanceQuery query, IMediator mediator) =>
         {
             var response = await mediator.Send(query);
-            return response is null ? Results.NotFound() : Results.Ok(response);
+            return Results.Ok(response);
         });
     }
 }
