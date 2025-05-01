@@ -1,12 +1,11 @@
-using FixedIncome.Application.Factories.Producer;
-using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
-using FixedIncome.Infrastructure.Factories.Producer;
-using FixedIncome.Infrastructure.Messaging.Abstractions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Outbox;
-using Microsoft.Extensions.Logging;
+using FixedIncome.Infrastructure.Factories.Producer;
+using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 
 namespace FixedIncome.Infrastructure.BackgroundJobs;
 
@@ -35,27 +34,34 @@ public class BackgroundOutboxJob : BackgroundService
                 var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
                 var producerFactory = scope.ServiceProvider.GetRequiredService<IProducerFactory>();
                 var producer = producerFactory.GetProducerService(ProducerType.SimulationEnded);
-                var outboxMessages = await uow.OutboxPatternRepository.GetBatch(limit:10, offset:0);
+                var outboxMessages = await uow.OutboxPatternRepository.GetPendingBatch(limit:10, offset:0);
                 
                 foreach (var outboxMessage in outboxMessages)
                 {
                     outboxMessage.ProcessedOn = DateTime.Now;
                     try
                     {
-                        if (outboxMessage.Type == OutboxMessageTypes.Email.ToString())
-                        {
-                            await _backgroundTaskQueue.EnqueueNewTask(async () =>
-                            {
-                                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
-                            }, stoppingToken);
-                            
-                            continue;
-                        }
+                        if (!Enum.TryParse<OutboxMessageTypes>(outboxMessage.Type, out var typeEnum))
+                            throw new Exception("Invalid OutBoxMessageType");
 
-                        if (outboxMessage.Type != OutboxMessageTypes.File.ToString())
-                            throw new Exception("Invalid OutboxMessageType");
-                        
-                        producer.Publish(outboxMessage.Content);
+                        switch (typeEnum)
+                        {
+                            case OutboxMessageTypes.Email:
+                                await _backgroundTaskQueue.EnqueueNewTask(async () =>
+                                {
+                                    // TODO: Just email simulation;
+                                    await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                                }, stoppingToken);
+                                
+                                continue;
+                            case OutboxMessageTypes.File:
+                                // TODO: Create Consumer LOGIC
+                                // TODO: Adicionar POLLY aqui ou uma lógica de retry desenvolvida por conta propria, ou ambas soluções;
+                                producer.Publish(outboxMessage.Content);
+                                continue;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
                     catch (Exception ex)
                     {

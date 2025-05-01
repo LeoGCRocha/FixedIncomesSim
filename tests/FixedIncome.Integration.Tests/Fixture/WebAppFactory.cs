@@ -38,8 +38,8 @@ public class WebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TPr
             services.RemoveAll<SimulationEndedProducer>();
             services.RemoveAll<IProducerFactory>();
 
-            services.AddSingleton<IConnection>(Substitute.For<IConnection>());
-            services.AddSingleton<IMessageBrokerConnection>(Substitute.For<IMessageBrokerConnection>());
+            services.AddSingleton(Substitute.For<IConnection>());
+            services.AddSingleton(Substitute.For<IMessageBrokerConnection>());
             services.AddScoped<SimulationEndedProducer>();
             services.AddScoped<IProducerFactory, ProducerFactory>();
 
