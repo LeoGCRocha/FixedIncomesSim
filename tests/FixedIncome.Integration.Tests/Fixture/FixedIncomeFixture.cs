@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +16,14 @@ public class FixedIncomeFixture : IAsyncDisposable
     {
         _webAppFactory = new WebAppFactory<Program>();
         _serviceProvider = _webAppFactory.Services.GetRequiredService<IServiceScopeFactory>();
+        
         _scope = _serviceProvider.CreateScope();
-
+        
         _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
             .Database.EnsureDeleted();
         
         _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
-            .Database.EnsureCreated();
+            .Database.Migrate();  
     }
     
     public async ValueTask DisposeAsync()
