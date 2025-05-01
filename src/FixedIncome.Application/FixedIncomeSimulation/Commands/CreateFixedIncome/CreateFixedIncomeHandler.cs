@@ -1,11 +1,11 @@
 using MediatR;
 using System.Diagnostics;
-using FixedIncome.Application.Factories.Outbox;
-using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
 using Microsoft.Extensions.Logging;
+using FixedIncome.Application.Factories.Outbox;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Application.FixedIncomeSimulation.DTOs;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
+using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 

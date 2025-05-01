@@ -35,4 +35,8 @@ public class OutboxPatternRepository : IOutboxPatternRepository
             outboxMessage.Error = messageUpdated.Error;
         _dbContext.Update(messageUpdated);
     }
+    public async Task<IEnumerable<OutboxMessage>> GetBatch(int limit, int offset)
+    {
+        await _dbContext.OutboxMessages.Skip(offset).Take(limit).ToListAsync();
+    }
 }

@@ -1,3 +1,4 @@
+using FixedIncome.Application.Factories.Outbox;
 using RabbitMQ.Client;
 using Microsoft.Extensions.Options;
 using FixedIncome.Infrastructure.Persistence;
@@ -6,6 +7,7 @@ using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.DomainEvents;
 using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ;
+using FixedIncome.Infrastructure.Persistence.Outbox;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation.Repository;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
@@ -20,6 +22,7 @@ public static class ServicesExtensions
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IFixedIncomeRepository, FixedIncomeRepository>();
+        services.AddScoped<IOutboxPatternRepository, OutboxPatternRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
@@ -28,6 +31,7 @@ public static class ServicesExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddScoped<IOutboxFactory, OutboxFactory>();
 
         services.AddSingleton<IConnection>(provider =>
         {

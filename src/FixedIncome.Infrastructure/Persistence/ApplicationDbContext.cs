@@ -23,22 +23,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         int result = await base.SaveChangesAsync(cancellationToken);
 
-        await PublishDomainEvents();
-        
         return result;
-    }
-
-    private async Task PublishDomainEvents()
-    {
-        var domainEvents = ChangeTracker.Entries<FixedIncomeSim>()
-            .SelectMany(ag => ag.Entity.GetDomainEvents())
-            .ToList();
-
-        await domainEventDispatcher.DispatchEvents(domainEvents);
-
-        foreach (var entity in ChangeTracker.Entries<FixedIncomeSim>())
-        {
-            entity.Entity.ClearDomainEvents();
-        }
     }
 }

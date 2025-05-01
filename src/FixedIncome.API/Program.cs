@@ -15,7 +15,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 services.AddApplicationDependencyInjection();
 
 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-services.AddHostedService<BackgroundJobs>();
+services.AddHostedService<BackgroundEmailJob>();
 
 services.AddRepositories();
 services.AddEndpointsApiExplorer();

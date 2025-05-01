@@ -18,7 +18,7 @@ public class OutboxFactory : IOutboxFactory
                     Email = "defautl@gmail.com",
                     Message = $"Fixed Income with Id {id} was sent to process."
                 })),
-            OutboxMessageTypes.File => OutboxMessage.OutboxMessageBuilder(OutboxMessageTypes.Email.ToString(),
+            OutboxMessageTypes.File => OutboxMessage.OutboxMessageBuilder(OutboxMessageTypes.File.ToString(),
                 JsonConvert.SerializeObject(new OutboxFileMessage { Id = id })),
             _ => throw new Exception("Invalid type definition")
         };
