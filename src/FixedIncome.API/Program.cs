@@ -14,9 +14,6 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 services.AddApplicationDependencyInjection();
 
-services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-services.AddHostedService<BackgroundEmailJob>();
-
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -25,6 +22,10 @@ services.AddCarter();
 services.AddConfigurations(builder.Configuration);
 services.AddServices();
 services.AddDbServices();
+
+services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+services.AddHostedService<BackgroundOutboxJob>();
+services.AddHostedService<BackgroundEmailJob>();
 
 var app = builder.Build();
 

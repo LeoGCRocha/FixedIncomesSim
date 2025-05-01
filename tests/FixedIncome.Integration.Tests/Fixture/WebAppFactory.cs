@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using FixedIncome.Application.Factories.Producer;
+using FixedIncome.Infrastructure.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;

@@ -1,7 +1,6 @@
 using System.Text;
 using RabbitMQ.Client;
 using System.Text.Json;
-using FixedIncome.Domain.FixedIncomeSimulation.Events;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 
 namespace FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
@@ -16,7 +15,7 @@ public class SimulationEndedProducer : IProducer
         _channel.QueueDeclare(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
     }
 
-    public void Publish(FixedIncomeSimulationEnded message)
+    public void Publish(object message)
     {
         var jsonObject = JsonSerializer.Serialize(message);
         var bodyMessage = Encoding.UTF8.GetBytes(jsonObject);

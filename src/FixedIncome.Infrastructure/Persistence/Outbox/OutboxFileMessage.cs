@@ -1,4 +1,4 @@
-namespace FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
+namespace FixedIncome.Infrastructure.Persistence.Outbox;
 
 public class OutboxFileMessage
 {

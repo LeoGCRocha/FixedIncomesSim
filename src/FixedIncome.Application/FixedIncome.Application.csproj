@@ -19,4 +19,8 @@
       <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="FixedIncomeSimulation\Abstractions\Outbox\" />
+    </ItemGroup>
+
 </Project>

@@ -2,13 +2,13 @@ namespace FixedIncome.Infrastructure.Configuration;
 
 public class RabbitMqConfiguration : IBaseConfiguration
 {
-    private readonly string Hostname;
-    private readonly string Port;
-    private readonly string Username;
-    private readonly string Password;
-    
+    public string Host { get; set; } = string.Empty;
+    public string Port { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+
     public string GetConnectionString()
     {
-        return $"amqp://{Username}:{Password}@{Hostname}:{Port}";
+        return $"amqp://{Username}:{Password}@{Host}:{Port}";
     }
 }

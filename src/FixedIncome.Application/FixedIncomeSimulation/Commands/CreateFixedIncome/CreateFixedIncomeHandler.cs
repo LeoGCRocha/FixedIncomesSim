@@ -6,6 +6,7 @@ using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Application.FixedIncomeSimulation.DTOs;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
+using FixedIncome.Infrastructure.Persistence.Outbox;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 

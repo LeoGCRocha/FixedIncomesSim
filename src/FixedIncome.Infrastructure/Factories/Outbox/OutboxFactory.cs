@@ -1,8 +1,9 @@
+using FixedIncome.Application.Factories.Outbox;
 using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 using Newtonsoft.Json;
 
-namespace FixedIncome.Application.Factories.Outbox;
+namespace FixedIncome.Infrastructure.Factories.Outbox;
 
 public class OutboxFactory : IOutboxFactory
 {
