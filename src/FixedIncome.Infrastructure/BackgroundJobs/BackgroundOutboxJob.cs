@@ -2,9 +2,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using FixedIncome.Application.Factories.Producer;
-using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 using FixedIncome.Infrastructure.Factories.Producer;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 
 namespace FixedIncome.Infrastructure.BackgroundJobs;
