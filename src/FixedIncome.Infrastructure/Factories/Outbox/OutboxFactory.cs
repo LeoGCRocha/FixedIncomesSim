@@ -8,18 +8,18 @@ namespace FixedIncome.Infrastructure.Factories.Outbox;
 public class OutboxFactory : IOutboxFactory
 {
 
-    public OutboxMessage CreateOutboxMessage(OutboxMessageTypes type, Guid id)
+    public OutboxMessage CreateOutboxMessage(EOutboxMessageTypes type, Guid id)
     {
         return type switch
         {
-            OutboxMessageTypes.Email => OutboxMessage.OutboxMessageBuilder(OutboxMessageTypes.Email.ToString(),
+            EOutboxMessageTypes.Email => OutboxMessage.OutboxMessageBuilder(EOutboxMessageTypes.Email.ToString(),
                 JsonConvert.SerializeObject(new OutboxEmailMessage
                 {
                     Id = id,
                     Email = "defautl@gmail.com",
                     Message = $"Fixed Income with Id {id} was sent to process."
                 })),
-            OutboxMessageTypes.File => OutboxMessage.OutboxMessageBuilder(OutboxMessageTypes.File.ToString(),
+            EOutboxMessageTypes.File => OutboxMessage.OutboxMessageBuilder(EOutboxMessageTypes.File.ToString(),
                 JsonConvert.SerializeObject(new OutboxFileMessage { Id = id })),
             _ => throw new Exception("Invalid type definition")
         };

@@ -42,10 +42,6 @@ public class WebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TPr
             services.AddSingleton(Substitute.For<IMessageBrokerConnection>());
             services.AddScoped<SimulationEndedProducer>();
             services.AddScoped<IProducerFactory, ProducerFactory>();
-
-            services.RemoveAll<IBackgroundTaskQueue>();
-            services.RemoveAll<BackgroundOutboxJob>();
-            services.RemoveAll<BackgroundEmailJob>();
         });
         
         builder.UseEnvironment("Testing");

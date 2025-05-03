@@ -5,6 +5,6 @@ namespace FixedIncome.Application.Factories.Outbox
 {
     public interface IOutboxFactory
     {
-        public OutboxMessage CreateOutboxMessage(OutboxMessageTypes type, Guid id);
+        public OutboxMessage CreateOutboxMessage(EOutboxMessageTypes type, Guid id);
     }
 }

@@ -5,6 +5,7 @@ using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
 
 namespace FixedIncome.Integration.Tests.Queries;
 
+[Collection("FixedIncomeIntegrationTests")]
 public class GetFixedBalanceQueryTest
 {
     private readonly FixedIncomeFixture _fixture = new();

@@ -41,12 +41,12 @@ public class BackgroundOutboxJob : BackgroundService
                     outboxMessage.ProcessedOn = DateTime.Now;
                     try
                     {
-                        if (!Enum.TryParse<OutboxMessageTypes>(outboxMessage.Type, out var typeEnum))
+                        if (!Enum.TryParse<EOutboxMessageTypes>(outboxMessage.Type, out var typeEnum))
                             throw new Exception("Invalid OutBoxMessageType");
 
                         switch (typeEnum)
                         {
-                            case OutboxMessageTypes.Email:
+                            case EOutboxMessageTypes.Email:
                                 await _backgroundTaskQueue.EnqueueNewTask(async () =>
                                 {
                                     // TODO: Just email simulation;
@@ -54,7 +54,7 @@ public class BackgroundOutboxJob : BackgroundService
                                 }, stoppingToken);
                                 
                                 continue;
-                            case OutboxMessageTypes.File:
+                            case EOutboxMessageTypes.File:
                                 // TODO: Create Consumer LOGIC
                                 // TODO: Adicionar POLLY aqui ou uma lógica de retry desenvolvida por conta propria, ou ambas soluções;
                                 producer.Publish(outboxMessage.Content);
