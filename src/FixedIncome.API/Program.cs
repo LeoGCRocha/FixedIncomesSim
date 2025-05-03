@@ -2,6 +2,7 @@
 using FixedIncome.API.Extensions;
 using FixedIncome.API.Middlewares;
 using FixedIncome.Application.Configuration;
+using FixedIncome.CrossCutting.Extensions;
 using FixedIncome.Infrastructure.BackgroundJobs;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 using FixedIncome.Infrastructure.Persistence;

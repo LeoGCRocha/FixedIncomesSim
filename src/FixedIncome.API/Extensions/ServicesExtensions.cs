@@ -37,11 +37,11 @@ public static class ServicesExtensions
 
         services.AddSingleton<IConnection>(provider =>
         {
-            var configuration = provider.GetRequiredService<IOptions<RabbitMqConfiguration>>();
+            var configuration = provider.GetRequiredService<RabbitMqConfiguration>();
             
             var factory = new ConnectionFactory
             {
-                Uri = new Uri(configuration.Value.GetConnectionString())
+                Uri = new Uri(configuration.GetConnectionString())
             };
             
             return factory.CreateConnection();

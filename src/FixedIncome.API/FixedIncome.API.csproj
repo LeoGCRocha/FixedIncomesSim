@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FixedIncome.Application\FixedIncome.Application.csproj" />
+      <ProjectReference Include="..\FixedIncome.CrossCutting\FixedIncome.CrossCutting.csproj" />
       <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
     </ItemGroup>
 
