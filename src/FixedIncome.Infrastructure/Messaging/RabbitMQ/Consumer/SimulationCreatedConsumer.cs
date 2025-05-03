@@ -23,6 +23,12 @@ public class SimulationCreatedConsumer : IConsumer
         _consumer.Received += Consume_Message;
     }
 
+    public void Consuming()
+    {
+        // Change AUTO-ACK to correct using of ack on messages.
+        _channel.BasicConsume(queue: QueueName, autoAck: true, consumer: _consumer);
+    }
+    
     private static void Consume_Message(object? _, BasicDeliverEventArgs ea)
     {
         var body = ea.Body.ToArray();

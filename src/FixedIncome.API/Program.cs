@@ -21,8 +21,10 @@ services.AddSwaggerGen();
 services.AddCarter();
 
 services.AddConfigurations(builder.Configuration);
+services.AddMessaging();
 services.AddServices();
 services.AddDbServices();
+
 
 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 services.AddHostedService<BackgroundOutboxJob>();

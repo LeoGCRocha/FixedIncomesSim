@@ -34,21 +34,8 @@ public static class ServicesExtensions
     {
         services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IOutboxFactory, OutboxFactory>();
-
-        services.AddSingleton<IConnection>(provider =>
-        {
-            var configuration = provider.GetRequiredService<RabbitMqConfiguration>();
-            
-            var factory = new ConnectionFactory
-            {
-                Uri = new Uri(configuration.GetConnectionString())
-            };
-            
-            return factory.CreateConnection();
-        });
-        services.AddSingleton<IMessageBrokerConnection, MessageBrokerConnection>();
-        services.AddScoped<SimulationEndedProducer>();
         services.AddScoped<IProducerFactory, ProducerFactory>();
+        services.AddScoped<SimulationEndedProducer>();
 
         return services;
     }

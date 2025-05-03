@@ -1,3 +1,4 @@
+using FixedIncome.Infrastructure.Messaging.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,8 +18,11 @@ public class Worker : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             using var scope = _provider.CreateScope();
+            var consumer = _provider.GetRequiredService<IConsumer>();
             
-            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+            consumer.Consuming();
+            
+            await Task.Delay(Timeout.Infinite, stoppingToken);
         }
     }
 }
