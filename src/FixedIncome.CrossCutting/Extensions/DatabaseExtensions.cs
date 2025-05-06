@@ -2,8 +2,9 @@ using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace FixedIncome.API.Extensions;
+namespace FixedIncome.CrossCutting.Extensions;
 
 public static class DatabaseExtensions
 {

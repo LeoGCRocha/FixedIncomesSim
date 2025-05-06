@@ -17,6 +17,8 @@ services.AddConfigurations(builder.Configuration);
 services.AddMessaging();
 services.AddServices();
 services.AddHostedService<Worker>();
+services.AddDbServices();
+services.AddMediatorServices();
 
 var host = builder.Build();
 await host.RunAsync();
