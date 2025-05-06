@@ -25,7 +25,6 @@ services.AddMessaging();
 services.AddServices();
 services.AddDbServices();
 
-
 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 services.AddHostedService<BackgroundOutboxJob>();
 services.AddHostedService<BackgroundEmailJob>();

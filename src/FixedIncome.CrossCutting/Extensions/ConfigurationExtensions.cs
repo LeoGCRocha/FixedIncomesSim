@@ -18,6 +18,10 @@ public static class ConfigurationExtensions
         var postgresConfiguration = new PostgresConfiguration();
         configuration.GetSection("Postgres").Bind(postgresConfiguration);
         services.AddSingleton(postgresConfiguration);
+
+        var pathsConfiguration = new PathsConfiguration();
+        configuration.GetSection("Paths").Bind(pathsConfiguration);
+        services.AddSingleton(pathsConfiguration);
         
         return services;
     }

@@ -1,5 +1,5 @@
+using FixedIncome.Application.RabbitMq.Consumer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
-using FixedIncome.Infrastructure.Messaging.RabbitMQ.Consumer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FileCreation.Consumer.Extensions;

@@ -1,15 +1,24 @@
 using System.Text;
+using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateBalanceFile;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
+using MediatR;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace FixedIncome.Infrastructure.Messaging.RabbitMQ.Consumer;
+namespace FixedIncome.Application.RabbitMq.Consumer;
 
 public class SimulationCreatedConsumer : IConsumer
 {
     private readonly IModel _channel;
     private readonly EventingBasicConsumer? _consumer;
     public string QueueName => "fixed_income_simulation_created";
+    private readonly IMediator _mediator;
+
+    public SimulationCreatedConsumer(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
 
     public SimulationCreatedConsumer(IConnection connection)
     {
@@ -25,15 +34,18 @@ public class SimulationCreatedConsumer : IConsumer
 
     public void Consuming()
     {
-        // Change AUTO-ACK to correct using of ack on messages.
-        _channel.BasicConsume(queue: QueueName, autoAck: true, consumer: _consumer);
+        _channel.BasicConsume(queue: QueueName, autoAck: false, consumer: _consumer);
     }
     
-    private static void Consume_Message(object? _, BasicDeliverEventArgs ea)
+    private void Consume_Message(object? _, BasicDeliverEventArgs ea)
     {
         var body = ea.Body.ToArray();
         var message = Encoding.UTF8.GetString(body);
+
+        var task = _mediator.Send(JsonConvert.DeserializeObject<CreateBalanceFileCommand>(message)!);
+
+        task.GetAwaiter();
         
-        Console.WriteLine(message);
+        _channel.BasicAck(ea.DeliveryTag, false);
     }
 }
