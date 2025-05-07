@@ -1,25 +1,8 @@
-using System.Text;
-using RabbitMQ.Client;
-using System.Text.Json;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 
 namespace FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
 
-public class SimulationEndedProducer : IProducer
+public class SimulationEndedProducer(IMessageBrokerConnection connection) : BaseProducer(connection)
 {
-    private readonly IModel _channel;
-
-    public SimulationEndedProducer(IMessageBrokerConnection connection)
-    {
-        _channel = connection.CreateModel();
-        _channel.QueueDeclare(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
-    }
-
-    public void Publish(object message)
-    {
-        string jsonObject = message as string ?? JsonSerializer.Serialize(message);
-        var bodyMessage = Encoding.UTF8.GetBytes(jsonObject);
-        _channel.BasicPublish(exchange: string.Empty, routingKey: QueueName, body: bodyMessage);
-    }
-    public string QueueName => "fixed_income_simulation_created";
+    public override string QueueName => "fixed_income_simulation_created";
 }

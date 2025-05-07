@@ -1,8 +1,8 @@
 ﻿using FileCreation.Consumer;
-using FileCreation.Consumer.Extensions;
 using Microsoft.Extensions.Hosting;
-using FixedIncome.CrossCutting.Extensions;
+using FileCreation.Consumer.Extensions;
 using Microsoft.Extensions.Configuration;
+using FixedIncome.CrossCutting.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = Host.CreateApplicationBuilder(args);

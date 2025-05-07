@@ -1,9 +1,9 @@
-using FixedIncome.Infrastructure.Factories.Producer;
-using Microsoft.Extensions.DependencyInjection;
+using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace FixedIncome.Application.Factories.Producer;
+namespace FixedIncome.Infrastructure.Factories.Producer;
 
 public class ProducerFactory : IProducerFactory
 {
@@ -15,7 +15,8 @@ public class ProducerFactory : IProducerFactory
         _provider = provider;
         _producers = new Dictionary<ProducerType, Type>()
         {
-            { ProducerType.SimulationEnded, typeof(SimulationEndedProducer) }
+            { ProducerType.SimulationEnded, typeof(SimulationEndedProducer) },
+            { ProducerType.Exception, typeof(ExceptionToDlqProducer) }
         };
     }
     
