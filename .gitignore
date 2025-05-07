@@ -6,6 +6,8 @@
 
 *.json
 
+*.csv
+
 # User-specific files
 *.rsuser
 *.suo
