@@ -1,15 +1,15 @@
-using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 
 namespace FixedIncome.Infrastructure.BackgroundJobs;
 
-public class BackgroundJobs : BackgroundService
+public class BackgroundEmailJob : BackgroundService
 {
-    private readonly ILogger<BackgroundJobs> _logger;
+    private readonly ILogger<BackgroundEmailJob> _logger;
     private readonly IBackgroundTaskQueue _backgroundTaskQueue;
 
-    public BackgroundJobs(ILogger<BackgroundJobs> logger, IBackgroundTaskQueue backgroundTaskQueue)
+    public BackgroundEmailJob(ILogger<BackgroundEmailJob> logger, IBackgroundTaskQueue backgroundTaskQueue)
     {
         _logger = logger;
         _backgroundTaskQueue = backgroundTaskQueue;
@@ -26,9 +26,7 @@ public class BackgroundJobs : BackgroundService
                 var workItem = await _backgroundTaskQueue.DequeueTask(stoppingToken);
 
                 if (workItem != null)
-                {
                     await workItem();
-                }
             }
             catch (OperationCanceledException)
             {

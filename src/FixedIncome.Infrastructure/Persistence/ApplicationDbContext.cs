@@ -1,5 +1,6 @@
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
+using FixedIncome.Infrastructure.Persistence.Outbox;
 using Microsoft.EntityFrameworkCore;
 
 namespace FixedIncome.Infrastructure.Persistence;
@@ -7,6 +8,7 @@ namespace FixedIncome.Infrastructure.Persistence;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDomainEventDispatcher domainEventDispatcher) : DbContext(options)
 {
     public DbSet<FixedIncomeSim> FixedIncomeSims => Set<FixedIncomeSim>();
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,22 +23,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         int result = await base.SaveChangesAsync(cancellationToken);
 
-        await PublishDomainEvents();
-        
         return result;
-    }
-
-    private async Task PublishDomainEvents()
-    {
-        var domainEvents = ChangeTracker.Entries<FixedIncomeSim>()
-            .SelectMany(ag => ag.Entity.GetDomainEvents())
-            .ToList();
-
-        await domainEventDispatcher.DispatchEvents(domainEvents);
-
-        foreach (var entity in ChangeTracker.Entries<FixedIncomeSim>())
-        {
-            entity.Entity.ClearDomainEvents();
-        }
     }
 }

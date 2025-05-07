@@ -1,13 +1,16 @@
+using NSubstitute;
 using RabbitMQ.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using FixedIncome.Application.Factories.Producer;
+using FixedIncome.Infrastructure.BackgroundJobs;
+using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
+using FixedIncome.Infrastructure.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
 
 namespace FixedIncome.Integration.Tests.Fixture;
 
@@ -35,8 +38,8 @@ public class WebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TPr
             services.RemoveAll<SimulationEndedProducer>();
             services.RemoveAll<IProducerFactory>();
 
-            services.AddSingleton<IConnection>(Substitute.For<IConnection>());
-            services.AddSingleton<IMessageBrokerConnection>(Substitute.For<IMessageBrokerConnection>());
+            services.AddSingleton(Substitute.For<IConnection>());
+            services.AddSingleton(Substitute.For<IMessageBrokerConnection>());
             services.AddScoped<SimulationEndedProducer>();
             services.AddScoped<IProducerFactory, ProducerFactory>();
         });

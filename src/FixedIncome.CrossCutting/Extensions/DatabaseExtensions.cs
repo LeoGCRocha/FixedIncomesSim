@@ -2,9 +2,9 @@ using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace FixedIncome.API.Extensions;
+namespace FixedIncome.CrossCutting.Extensions;
 
 public static class DatabaseExtensions
 {
@@ -12,8 +12,8 @@ public static class DatabaseExtensions
     {
         services.AddDbContext<ApplicationDbContext>((provider, options) =>
         {
-            var configuration = provider.GetRequiredService<IOptions<PostgresConfiguration>>();
-            options.UseNpgsql(configuration.Value.GetConnectionString());
+            var configuration = provider.GetRequiredService<PostgresConfiguration>();
+            options.UseNpgsql(configuration.GetConnectionString());
         });
 
         services.AddTransient<IDapperDbContext, DapperDbContext>();

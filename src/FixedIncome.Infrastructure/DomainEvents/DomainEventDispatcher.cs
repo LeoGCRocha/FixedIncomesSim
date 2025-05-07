@@ -1,6 +1,6 @@
-using FixedIncome.Infrastructure.DomainEvents.Abstractions;
-using FixedIncome.Domain.Common.Abstractions;
 using MediatR;
+using FixedIncome.Domain.Common.Abstractions;
+using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 
 namespace FixedIncome.Infrastructure.DomainEvents;
 

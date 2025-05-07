@@ -1,7 +1,6 @@
 using FixedIncome.Domain.Common.Enums;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Domain.Common.ValueObjects;
-using FixedIncome.Domain.FixedIncomeSimulation.Events;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 
@@ -93,8 +92,6 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
 
         FinalGrossAmount = InvestedAmount + _monthlyProfits.Sum(e => e.Value);
         FinalNetAmount = InvestedAmount + _orders.Sum(e => e.NetProfit());
-        
-        RaiseDomainEvent(new FixedIncomeSimulationEnded(Id, nameof(FixedIncomeSim)));
     }
 
     private void GenerateBalance()

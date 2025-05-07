@@ -80,6 +80,9 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.Property<Guid?>("FixedIncomeId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("FixedIncomeSimId")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal>("MonthlyYield")
                         .HasColumnType("numeric");
 
@@ -106,6 +109,8 @@ namespace FixedIncome.Infrastructure.Data.Migrations
 
                     b.HasIndex("FixedIncomeId");
 
+                    b.HasIndex("FixedIncomeSimId");
+
                     b.ToTable("fixed_income_order", "fixed_incomes");
                 });
 
@@ -126,6 +131,9 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.Property<Guid?>("FixedIncomeOrderId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("FixedIncomeOrderId1")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal>("MonthlyYield")
                         .HasColumnType("numeric");
 
@@ -143,6 +151,8 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FixedIncomeOrderId");
+
+                    b.HasIndex("FixedIncomeOrderId1");
 
                     b.ToTable("fixed_income_order_event", "fixed_incomes");
                 });
@@ -202,6 +212,36 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.ToTable("fixed_income_simulation", "fixed_incomes");
                 });
 
+            modelBuilder.Entity("FixedIncome.Infrastructure.Persistence.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccuredOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("outbox_message", "fixed_incomes");
+                });
+
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances.FixedIncomeBalance", b =>
                 {
                     b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", null)
@@ -216,6 +256,10 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                         .WithMany("_orders")
                         .HasForeignKey("FixedIncomeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", null)
+                        .WithMany("GetOrders")
+                        .HasForeignKey("FixedIncomeSimId");
                 });
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders.FixedIncomeOrderEvent", b =>
@@ -224,6 +268,11 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                         .WithMany("_events")
                         .HasForeignKey("FixedIncomeOrderId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders.FixedIncomeOrder", null)
+                        .WithMany("GetEvents")
+                        .HasForeignKey("FixedIncomeOrderId1")
+                        .HasConstraintName("FK_fixed_income_order_event_fixed_income_order_FixedIncomeOrd~1");
                 });
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", b =>
@@ -257,11 +306,15 @@ namespace FixedIncome.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders.FixedIncomeOrder", b =>
                 {
+                    b.Navigation("GetEvents");
+
                     b.Navigation("_events");
                 });
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", b =>
                 {
+                    b.Navigation("GetOrders");
+
                     b.Navigation("_balances");
 
                     b.Navigation("_orders");

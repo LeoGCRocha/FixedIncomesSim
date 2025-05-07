@@ -1,7 +1,7 @@
 ﻿using Carter;
 using FixedIncome.API.Extensions;
 using FixedIncome.API.Middlewares;
-using FixedIncome.Application.Configuration;
+using FixedIncome.CrossCutting.Extensions;
 using FixedIncome.Infrastructure.BackgroundJobs;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 using FixedIncome.Infrastructure.Persistence;
@@ -12,10 +12,7 @@ var services = builder.Services;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-services.AddApplicationDependencyInjection();
-
-services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-services.AddHostedService<BackgroundJobs>();
+services.AddMediatorServices();
 
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
@@ -23,8 +20,14 @@ services.AddSwaggerGen();
 services.AddCarter();
 
 services.AddConfigurations(builder.Configuration);
+services.AddMediatorServices();
+services.AddMessaging();
 services.AddServices();
 services.AddDbServices();
+
+services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+services.AddHostedService<BackgroundOutboxJob>();
+services.AddHostedService<BackgroundEmailJob>();
 
 var app = builder.Build();
 
