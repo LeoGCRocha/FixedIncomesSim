@@ -4,21 +4,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace FileCreation.Consumer;
 
-public class Worker : BackgroundService
+public class Worker(IServiceProvider provider) : BackgroundService
 {
-    private readonly IServiceProvider _provider;
-    
-    public Worker(IServiceProvider provider)
-    {
-        _provider = provider;
-    }
-    
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            using var scope = _provider.CreateScope();
-            var consumer = _provider.GetRequiredService<IConsumer>();
+            using var scope = provider.CreateScope();
+            var consumer = provider.GetRequiredService<IConsumer>();
             
             consumer.Consuming();
             

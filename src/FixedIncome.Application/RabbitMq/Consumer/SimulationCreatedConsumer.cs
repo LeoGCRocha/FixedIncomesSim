@@ -1,5 +1,6 @@
 using MediatR;
 using System.Text;
+using FixedIncome.Application.Exceptions;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -17,7 +18,6 @@ public class SimulationCreatedConsumer : IConsumer
     private readonly EventingBasicConsumer? _consumer;
     private readonly IProducer _producer;
     public string QueueName => "fixed_income_simulation_created";
-
     public SimulationCreatedConsumer(IConnection connection, IMediator mediator, IProducerFactory producerFactory)
     {
         _mediator = mediator;
@@ -47,11 +47,16 @@ public class SimulationCreatedConsumer : IConsumer
             var task = _mediator.Send(JsonConvert.DeserializeObject<CreateBalanceFileCommand>(message)!);
             task.GetAwaiter().GetResult();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            _producer.Publish(ex.Message);
-            return;
+            _producer.Publish(new DefaultException
+            {
+                Message = ex.Message
+            });
         }
-        _channel.BasicAck(ea.DeliveryTag, false);
+        finally
+        {
+            _channel.BasicAck(ea.DeliveryTag, false);
+        }
     }
 }

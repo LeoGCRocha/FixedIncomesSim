@@ -17,9 +17,16 @@ public abstract class BaseProducer : IProducer
     
     public void Publish(object message)
     {
-        string jsonObject = message as string ?? JsonSerializer.Serialize(message);
-        var bodyMessage = Encoding.UTF8.GetBytes(jsonObject);
-        _channel.BasicPublish(exchange: ExchangeType.Direct, routingKey: QueueName, body: bodyMessage);
+        try
+        {
+            string jsonObject = message as string ?? JsonSerializer.Serialize(message);
+            var bodyMessage = Encoding.UTF8.GetBytes(jsonObject);
+            _channel.BasicPublish(exchange: string.Empty, routingKey: QueueName, body: bodyMessage);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
     
     public abstract string QueueName { get; }

@@ -34,7 +34,6 @@ public static class ServicesExtensions
     {
         services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IOutboxFactory, OutboxFactory>();
-        services.AddScoped<IProducerFactory, ProducerFactory>();
         services.AddScoped<SimulationEndedProducer>();
 
         return services;

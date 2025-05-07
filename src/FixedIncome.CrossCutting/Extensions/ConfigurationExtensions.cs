@@ -2,6 +2,7 @@ using RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FixedIncome.Infrastructure.Configuration;
+using FixedIncome.Infrastructure.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ;
 
@@ -37,6 +38,7 @@ public static class ConfigurationExtensions
                 
             return factory.CreateConnection();
         });
+        services.AddScoped<IProducerFactory, ProducerFactory>();
         services.AddSingleton<IMessageBrokerConnection, MessageBrokerConnection>();
 
         return services;
