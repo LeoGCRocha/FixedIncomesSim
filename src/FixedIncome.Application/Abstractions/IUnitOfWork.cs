@@ -1,6 +1,7 @@
-using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
+using FixedIncome.Infrastructure.Persistence.Abstractions;
 
-namespace FixedIncome.Infrastructure.Persistence.Abstractions;
+namespace FixedIncome.Application.Abstractions;
 
 public interface IUnitOfWork : IDisposable
 {

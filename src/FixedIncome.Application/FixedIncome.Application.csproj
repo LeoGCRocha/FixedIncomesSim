@@ -17,12 +17,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
-      <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="FixedIncomeSimulation\Abstractions\Outbox\" />
-      <Folder Include="RabbitMq\" />
     </ItemGroup>
 
 </Project>

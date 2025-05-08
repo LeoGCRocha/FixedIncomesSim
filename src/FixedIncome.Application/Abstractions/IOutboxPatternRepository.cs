@@ -1,3 +1,4 @@
+using FixedIncome.Application.Outbox;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 
 namespace FixedIncome.Infrastructure.Persistence.Abstractions;

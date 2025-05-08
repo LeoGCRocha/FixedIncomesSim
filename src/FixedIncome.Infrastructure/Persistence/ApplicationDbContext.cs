@@ -1,3 +1,4 @@
+using FixedIncome.Application.Outbox;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Outbox;

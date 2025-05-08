@@ -1,17 +1,17 @@
 using MediatR;
 using CsvHelper;
 using System.Globalization;
+using FixedIncome.Application.FixedIncomeSimulation.Abstractions;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
-using FixedIncome.Infrastructure.Configuration;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateBalanceFile;
 
 public class CreateBalanceFileHandler : IRequestHandler<CreateBalanceFileCommand>
 {
     private readonly IMediator _mediator;
-    private readonly PathsConfiguration _pathsConfiguration;
+    private readonly IPathProvider _pathsConfiguration;
 
-    public CreateBalanceFileHandler(IMediator mediator, PathsConfiguration configuration)
+    public CreateBalanceFileHandler(IMediator mediator, IPathProvider configuration)
     {
         _mediator = mediator;
         _pathsConfiguration = configuration;
@@ -22,7 +22,7 @@ public class CreateBalanceFileHandler : IRequestHandler<CreateBalanceFileCommand
         var command = new GetFixedBalanceQuery { Id = request.Id };
         var response = await _mediator.Send(command, cancellationToken);
 
-        var outputDir = _pathsConfiguration.OutputDirectory;
+        var outputDir = _pathsConfiguration.GetOutputDirectory();
         if (!Directory.Exists(outputDir))
         {
             Directory.CreateDirectory(outputDir);

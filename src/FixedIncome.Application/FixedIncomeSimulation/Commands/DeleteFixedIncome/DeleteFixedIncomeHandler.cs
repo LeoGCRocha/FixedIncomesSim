@@ -1,3 +1,4 @@
+using FixedIncome.Application.Abstractions;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using MediatR;

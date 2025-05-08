@@ -1,4 +1,5 @@
-using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Application.Abstractions;
+using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 
 namespace FixedIncome.Infrastructure.Persistence;

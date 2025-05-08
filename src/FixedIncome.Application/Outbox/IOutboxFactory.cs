@@ -1,4 +1,5 @@
 using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
+using FixedIncome.Application.Outbox;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 
 namespace FixedIncome.Application.Factories.Outbox

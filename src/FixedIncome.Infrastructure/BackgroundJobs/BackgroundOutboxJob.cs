@@ -1,3 +1,4 @@
+using FixedIncome.Application.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;

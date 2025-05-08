@@ -1,3 +1,4 @@
+using FixedIncome.Application.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
