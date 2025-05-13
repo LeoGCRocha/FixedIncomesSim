@@ -13,14 +13,13 @@ public static class MediatorExtensions
         
         assembly ??= Assembly.GetCallingAssembly();
 
-        var genericHandlerType = typeof(IRequestHandler<,>);
-
         var handlerTypes = assembly
             .GetTypes()
             .Where(type => type is { IsClass: true, IsAbstract: false, IsInterface: false })
             .SelectMany(
                 type => type.GetInterfaces()
-                    .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericHandlerType)
+                    .Where(i => i.IsGenericType 
+                                && (i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>) || i.GetGenericTypeDefinition() == typeof(IRequestHandler<>)))
                     .Select(i => new { Interface = i, Implementation = type })
             );
 

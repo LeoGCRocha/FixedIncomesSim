@@ -13,7 +13,6 @@ var services = builder.Services;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();

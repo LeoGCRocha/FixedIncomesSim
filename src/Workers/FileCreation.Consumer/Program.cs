@@ -14,13 +14,13 @@ builder.Configuration
 
 var services = builder.Services;
 
+
 services.AddConfigurations(builder.Configuration);
-services.AddBasicMediator(typeof(GetFixedBalanceQueryHandler).Assembly);
 services.AddMessaging();
+services.AddDbServices();
+services.AddBasicMediator(typeof(GetFixedBalanceQueryHandler).Assembly);
 services.AddServices();
 services.AddHostedService<Worker>();
-services.AddDbServices();
-
 
 var host = builder.Build();
 await host.RunAsync();

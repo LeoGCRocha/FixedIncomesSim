@@ -51,7 +51,7 @@ public class SimulationCreatedConsumer : IConsumer
         {
             _producer.Publish(new DefaultException
             {
-                Message = ex.Message
+               Message = ex.Message
             });
         }
         finally

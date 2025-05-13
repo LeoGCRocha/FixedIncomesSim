@@ -19,8 +19,6 @@ public static class ServicesExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IFixedIncomeRepository, FixedIncomeRepository>();
-        services.AddScoped<IFixedIncomeQueryRepository, FixedIncomeQueryRepository>();
         services.AddScoped<IOutboxPatternRepository, OutboxPatternRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
@@ -29,7 +27,6 @@ public static class ServicesExtensions
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddTransient<IPathProvider, PathProvider>();
         services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IOutboxFactory, OutboxFactory>();
         services.AddScoped<SimulationEndedProducer>();
