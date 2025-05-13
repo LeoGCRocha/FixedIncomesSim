@@ -1,6 +1,7 @@
 ﻿using Carter;
 using FixedIncome.API.Extensions;
 using FixedIncome.API.Middlewares;
+using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
 using FixedIncome.CrossCutting.Extensions;
 using FixedIncome.Infrastructure.BackgroundJobs;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
@@ -23,6 +24,7 @@ services.AddConfigurations(builder.Configuration);
 services.AddMediatorServices();
 services.AddMessaging();
 services.AddServices();
+services.AddBasicMediator(typeof(GetFixedBalanceQueryHandler).Assembly);
 services.AddDbServices();
 
 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
