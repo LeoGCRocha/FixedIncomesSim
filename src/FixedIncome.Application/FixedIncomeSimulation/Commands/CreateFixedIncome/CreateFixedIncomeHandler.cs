@@ -38,15 +38,15 @@ public class CreateFixedIncomeHandler : IRequestHandler<CreateFixedIncomeCommand
             fixedIncome.SetInformation(request.Information.Title, request.Information.Type);
 
         var stopwatch = Stopwatch.StartNew();
-        
-        await _unitOfWork.FixedIncomeRepository.AddAsync(fixedIncome);
 
+        await _unitOfWork.BulkCopyFixedIncomeSim(fixedIncome);
+        
         await _unitOfWork.OutboxPatternRepository.AddAsync(
             _outboxFactory.CreateOutboxMessage(EOutboxMessageTypes.Email, fixedIncome.Id));
-
+        
         await _unitOfWork.OutboxPatternRepository.AddAsync(
             _outboxFactory.CreateOutboxMessage(EOutboxMessageTypes.File, fixedIncome.Id));
-
+        
         await _unitOfWork.CommitAsync();
         
         stopwatch.Stop();

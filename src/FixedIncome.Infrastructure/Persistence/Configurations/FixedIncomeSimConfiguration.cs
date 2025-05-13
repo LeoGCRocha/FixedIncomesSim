@@ -49,17 +49,14 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
         // TODO: Change this to can be null
         builder.OwnsOne(f => f.Information)
             .Property(i => i.Title)
-            .HasColumnName("investiment_title")
+            .HasColumnName("InvestmentTitle")
             .HasDefaultValue(null);
 
-        builder.OwnsOne(f => f.Information, info =>
-        {
-            info.Property(i => i.Type)
-                .HasDefaultValue(null);
+        builder.OwnsOne(f => f.Information)
+            .Property(i => i.Type)
+            .HasColumnName("InformationType")
+            .HasDefaultValue(null);
 
-            info.HasIndex(f => f.Type);
-        });
-        
         builder.HasIndex(f => f.StartDate);
         
         // Shadow columns

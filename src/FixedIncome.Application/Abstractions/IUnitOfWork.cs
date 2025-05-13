@@ -1,3 +1,4 @@
+using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 
@@ -9,4 +10,5 @@ public interface IUnitOfWork : IDisposable
     IOutboxPatternRepository OutboxPatternRepository { get;  }
     
     public Task CommitAsync();
+    public Task BulkCopyFixedIncomeSim(FixedIncomeSim fixedIncomeSim);
 }
