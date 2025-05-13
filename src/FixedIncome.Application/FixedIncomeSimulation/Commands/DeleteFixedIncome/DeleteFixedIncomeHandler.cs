@@ -1,7 +1,5 @@
 using FixedIncome.Application.Abstractions;
-using FixedIncome.Domain.Common.Abstractions;
-using FixedIncome.Infrastructure.Persistence.Abstractions;
-using MediatR;
+using FixedIncome.Application.Mediator;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.DeleteFixedIncome;
 

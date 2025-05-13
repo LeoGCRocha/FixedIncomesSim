@@ -1,3 +1,4 @@
+using FixedIncome.Application.Mediator;
 using MediatR;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
@@ -10,7 +11,8 @@ public class DomainEventDispatcher(IMediator mediator) : IDomainEventDispatcher
     {
         foreach (var domainEvent in domainEvents)
         {
-            await mediator.Publish(domainEvent);
+            // TODO: Implement notification
+            // await mediator.Publish(domainEvent);
         }
     }
 }

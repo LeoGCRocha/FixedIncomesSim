@@ -1,6 +1,6 @@
 using FixedIncome.Application.FixedIncomeSimulation.DTOs;
+using FixedIncome.Application.Mediator;
 using FixedIncome.Domain.Common.ValueObjects;
-using MediatR;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 

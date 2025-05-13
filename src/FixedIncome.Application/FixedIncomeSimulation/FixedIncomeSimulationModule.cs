@@ -16,7 +16,7 @@ public class FixedIncomeSimulationModule : ICarterModule
     {
         app.MapPost("/simulation", async ([FromBody] CreateFixedIncomeCommand cmd, IMediator mediator) =>
         {
-            // await mediator.Send(cmd);
+            await mediator.Send(cmd);
             return Results.Ok();
         }).Produces<Created>()
         .WithTags("Simulation");
