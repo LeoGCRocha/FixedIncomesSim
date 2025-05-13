@@ -11,13 +11,7 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
         builder.ToTable("fixed_income_order_event");
 
         builder.HasKey(f => f.Id);
-
-        builder.HasOne<FixedIncomeOrder>()
-            .WithMany("_events")
-            .HasForeignKey("FixedIncomeOrderId")
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-
+        
         builder.Property(f => f.StartReferenceDate)
             .IsRequired();
 
@@ -35,5 +29,8 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
 
         builder.Property(f => f.Profit)
             .HasDefaultValue(0);
+
+        builder.Property<Guid>("FixedIncomeOrderId")
+            .IsRequired();
     }
 }

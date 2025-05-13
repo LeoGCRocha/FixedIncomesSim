@@ -10,24 +10,13 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
     public void Configure(EntityTypeBuilder<FixedIncomeOrder> builder)
     {
         builder.ToTable("fixed_income_order");
-
+        
         builder.HasKey(f => f.Id);
         
         builder.Property(f => f.StartDate)
             .IsRequired();
 
         builder.Property(f => f.EndDate)
-            .IsRequired();
-
-        builder.HasMany<FixedIncomeOrderEvent>("_events")
-            .WithOne()
-            .HasForeignKey("FixedIncomeOrderId")
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasOne<FixedIncomeSim>()
-            .WithMany()
-            .HasForeignKey("FixedIncomeId")
-            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.Property(f => f.StartAmount)
@@ -44,8 +33,9 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
 
         builder.Property(f => f.MonthlyYield)
             .IsRequired();
+
+        builder.Ignore(b => b.GetEvents);
         
-        // Shadow properties
         builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
@@ -53,5 +43,10 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
         builder.Property<DateTime>("UpdatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAddOrUpdate();
+
+        builder.HasMany<FixedIncomeOrderEvent>("_events")
+            .WithOne()
+            .HasForeignKey("FixedIncomeOrderId")
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
