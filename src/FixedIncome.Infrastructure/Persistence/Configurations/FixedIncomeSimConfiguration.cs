@@ -4,7 +4,7 @@ using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeSim>
 {

@@ -1,9 +1,9 @@
+using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FixedIncome.Domain.FixedIncomeSimulation;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncomeOrder>
 {
@@ -27,7 +27,8 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
         builder.HasOne<FixedIncomeSim>()
             .WithMany()
             .HasForeignKey("FixedIncomeId")
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
 
         builder.Property(f => f.StartAmount)
             .HasDefaultValue(0);

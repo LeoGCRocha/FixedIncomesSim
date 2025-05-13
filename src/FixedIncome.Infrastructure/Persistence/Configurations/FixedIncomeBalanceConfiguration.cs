@@ -1,8 +1,8 @@
+using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeBalanceConfiguration : IEntityTypeConfiguration<FixedIncomeBalance>
 {
@@ -13,7 +13,8 @@ public class FixedIncomeBalanceConfiguration : IEntityTypeConfiguration<FixedInc
         builder.HasOne<Domain.FixedIncomeSimulation.FixedIncomeSim>()
             .WithMany()
             .HasForeignKey("FixedIncomeId") 
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(); 
         
         builder.Property(f => f.Amount)
             .IsRequired();
