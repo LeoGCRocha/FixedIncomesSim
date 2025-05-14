@@ -1,10 +1,10 @@
 using FixedIncome.Application.Abstractions;
+using FixedIncome.Application.Helper;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
-using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.EntityFrameworkCore;
 
@@ -41,9 +41,9 @@ public class UnitOfWork : IUnitOfWork
         try
         {
             await BulkCopyFixedIncome(transaction, fixedIncomeSim);
-            await BulkCopyFixedIncomeOrders(transaction, fixedIncomeSim.GetOrders);
-            await BulkCopyFixedIncomeOrderEvents(transaction, fixedIncomeSim.GetOrderEvents);
-            await BulkCopyFixedIncomeBalance(transaction, fixedIncomeSim.GetBalances);
+            await BulkCopyFixedIncomeOrders(transaction, fixedIncomeSim.GetOrders, fixedIncomeSim.Id);
+            await BulkCopyFixedIncomeOrderEvents(transaction, fixedIncomeSim.GetOrders);
+            await BulkCopyFixedIncomeBalance(transaction, fixedIncomeSim.GetBalances, fixedIncomeSim.Id);
             
             await transaction.CommitAsync();
         }
@@ -57,41 +57,36 @@ public class UnitOfWork : IUnitOfWork
 
     private static async Task BulkCopyFixedIncome(DataConnectionTransaction transaction, FixedIncomeSim fixedIncomeSim)
     {
-        var mappedData = new
-        {
-            InvestmentTitle = fixedIncomeSim.Information.Title,
-            InformationType = fixedIncomeSim.Information.Type,
-            fixedIncomeSim.Id,
-            fixedIncomeSim.StartDate,
-            fixedIncomeSim.EndDate,
-            fixedIncomeSim.StartAmount,
-            fixedIncomeSim.MonthlyYield,
-            fixedIncomeSim.MonthlyContribution,
-            fixedIncomeSim.InvestedAmount,
-            fixedIncomeSim.FinalGrossAmount,
-            fixedIncomeSim.FinalNetAmount
-        };
+        var returnedObject = fixedIncomeSim.FixedIncomeSimulationToLinq();
         
         await transaction.DataConnection.BulkCopyAsync(new BulkCopyOptions()
         {
             SchemaName = "fixed_incomes",
             TableName = "fixed_income_simulation"
-        }, [mappedData]);
+        }, [ returnedObject ]);
     }
 
     private static async Task BulkCopyFixedIncomeOrders(DataConnectionTransaction transaction,
-        IEnumerable<FixedIncomeOrder> orders)
+        IEnumerable<FixedIncomeOrder> orders,
+        Guid fixedIncomeSimulationId)
     {
+        var ordersElements = orders.Select(order => order.FixedIncomeOrderToLinq(fixedIncomeSimulationId));
+        
         await transaction.DataConnection.BulkCopyAsync(new BulkCopyOptions()
         {
             SchemaName = "fixed_incomes",
             TableName = "fixed_income_order"
-        }, orders);
+        }, ordersElements);
     }
 
     private static async Task BulkCopyFixedIncomeOrderEvents(DataConnectionTransaction transaction,
-        IEnumerable<FixedIncomeOrderEvent> orderEvents)
+        IEnumerable<FixedIncomeOrder> orders)
     {
+        List<FixedIncomeEventLinq2Db> orderEvents = [];
+
+        foreach (var order in orders)
+            orderEvents.AddRange(order.GetEvents.Select(ordEvent => ordEvent.OrderEventToLinq(order.Id)));
+        
         await transaction.DataConnection.BulkCopyAsync(new BulkCopyOptions()
         {
             SchemaName = "fixed_incomes",
@@ -100,12 +95,15 @@ public class UnitOfWork : IUnitOfWork
     }
 
     private static async Task BulkCopyFixedIncomeBalance(DataConnectionTransaction transaction,
-        IEnumerable<FixedIncomeBalance> fixedIncomeBalances)
+        IEnumerable<FixedIncomeBalance> fixedIncomeBalances,
+        Guid id)
     {
+        var balanceObjects = fixedIncomeBalances.Select(balance => balance.BalanceToLinq(id));
+        
         await transaction.DataConnection.BulkCopyAsync(new BulkCopyOptions()
         {
             SchemaName = "fixed_incomes",
             TableName = "fixed_income_balance"
-        }, fixedIncomeBalances);
+        }, balanceObjects);
     }
 }

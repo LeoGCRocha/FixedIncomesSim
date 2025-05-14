@@ -54,7 +54,7 @@ public class FixedIncomeQueryRepository(IDapperDbContext dapperDbContext) : IFix
                              	FROM
                              	  	fixed_incomes.fixed_income_balance fib
                              	WHERE
-                             		fib."FixedIncomeId" = @Id
+                             		fib."FixedIncomeSimId" = @Id
                              	ORDER BY
                              		fib."ReferenceDate"
                              )

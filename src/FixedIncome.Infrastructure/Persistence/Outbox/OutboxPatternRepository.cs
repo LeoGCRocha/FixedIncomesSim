@@ -38,6 +38,6 @@ public class OutboxPatternRepository : IOutboxPatternRepository
     }
     public async Task<IEnumerable<OutboxMessage>> GetPendingBatch(int limit, int offset)
     {
-        return await _dbContext.OutboxMessages.Where(o => o.ProcessedOn == null).Skip(offset).Take(limit).OrderBy(o => o.OccuredOn).ToListAsync();
+        return await _dbContext.OutboxMessages.Where(o => o.ProcessedOn == null).OrderBy(o => o.OccuredOn).Skip(offset).Take(limit).ToListAsync();
     }
 }
