@@ -4,7 +4,7 @@ using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeSim>
 {
@@ -35,34 +35,32 @@ public class FixedIncomeSimConfiguration : IEntityTypeConfiguration<FixedIncomeS
         builder.Property(f => f.FinalNetAmount)
             .HasDefaultValue(0);
 
-        builder
-            .HasMany<FixedIncomeOrder>("_orders")
+        builder.Ignore(b => b.GetBalances);
+        builder.Ignore(b => b.GetOrders);
+        builder.Ignore(b => b.GetOrderEvents);
+        
+        builder.HasMany<FixedIncomeOrder>("_orders")
             .WithOne()
-            .HasForeignKey("FixedIncomeId")
+            .HasForeignKey("FixedIncomeSimId")
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany<FixedIncomeBalance>("_balances") // Have many balances
-            .WithOne() // Balance have one FixedIncome
-            .HasForeignKey("FixedIncomeId")
+        builder.HasMany<FixedIncomeBalance>("_balances") 
+            .WithOne() 
+            .HasForeignKey("FixedIncomeSimId")
             .OnDelete(DeleteBehavior.Cascade);
 
-        // TODO: Change this to can be null
         builder.OwnsOne(f => f.Information)
             .Property(i => i.Title)
-            .HasColumnName("investiment_title")
+            .HasColumnName("InvestmentTitle")
             .HasDefaultValue(null);
 
-        builder.OwnsOne(f => f.Information, info =>
-        {
-            info.Property(i => i.Type)
-                .HasDefaultValue(null);
+        builder.OwnsOne(f => f.Information)
+            .Property(i => i.Type)
+            .HasColumnName("InformationType")
+            .HasDefaultValue(null);
 
-            info.HasIndex(f => f.Type);
-        });
-        
         builder.HasIndex(f => f.StartDate);
         
-        // Shadow columns
         builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();

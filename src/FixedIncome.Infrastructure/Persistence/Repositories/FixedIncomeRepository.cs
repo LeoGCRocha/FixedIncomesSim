@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using FixedIncome.Domain.FixedIncomeSimulation;
-using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation;
+namespace FixedIncome.Infrastructure.Persistence.Repositories;
 
 public class FixedIncomeRepository : IFixedIncomeRepository
 {

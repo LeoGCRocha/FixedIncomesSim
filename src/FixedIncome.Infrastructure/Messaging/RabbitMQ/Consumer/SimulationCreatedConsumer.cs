@@ -1,15 +1,15 @@
-using MediatR;
 using System.Text;
 using FixedIncome.Application.Exceptions;
+using FixedIncome.Application.Factories.Producer;
+using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateBalanceFile;
+using FixedIncome.Application.Mediator;
+using FixedIncome.Infrastructure.Factories.Producer;
+using FixedIncome.Infrastructure.Messaging.Abstractions;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using FixedIncome.Application.Factories.Producer;
-using FixedIncome.Infrastructure.Factories.Producer;
-using FixedIncome.Infrastructure.Messaging.Abstractions;
-using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateBalanceFile;
 
-namespace FixedIncome.Application.RabbitMq.Consumer;
+namespace FixedIncome.Infrastructure.Messaging.RabbitMQ.Consumer;
 
 public class SimulationCreatedConsumer : IConsumer
 {
@@ -51,7 +51,7 @@ public class SimulationCreatedConsumer : IConsumer
         {
             _producer.Publish(new DefaultException
             {
-                Message = ex.Message
+               Message = ex.Message
             });
         }
         finally

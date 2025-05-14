@@ -1,11 +1,13 @@
+using FixedIncome.Application.Abstractions;
 using FixedIncome.Application.Factories.Outbox;
 using FixedIncome.Domain.Common.Enums;
 using FixedIncome.Domain.Common.ValueObjects;
 using FixedIncome.Integration.Tests.Fixture;
 using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
+using FixedIncome.Application.Outbox;
 using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
-using FixedIncome.Domain.FixedIncomeSimulation.Repository;
+using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 using FluentAssertions;

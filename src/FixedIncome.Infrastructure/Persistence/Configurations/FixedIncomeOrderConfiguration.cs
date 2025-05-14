@@ -1,16 +1,16 @@
+using FixedIncome.Domain.FixedIncomeSimulation;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FixedIncome.Domain.FixedIncomeSimulation;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncomeOrder>
 {
     public void Configure(EntityTypeBuilder<FixedIncomeOrder> builder)
     {
         builder.ToTable("fixed_income_order");
-
+        
         builder.HasKey(f => f.Id);
         
         builder.Property(f => f.StartDate)
@@ -18,16 +18,6 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
 
         builder.Property(f => f.EndDate)
             .IsRequired();
-
-        builder.HasMany<FixedIncomeOrderEvent>("_events")
-            .WithOne()
-            .HasForeignKey("FixedIncomeOrderId")
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasOne<FixedIncomeSim>()
-            .WithMany()
-            .HasForeignKey("FixedIncomeId")
-            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(f => f.StartAmount)
             .HasDefaultValue(0);
@@ -43,8 +33,9 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
 
         builder.Property(f => f.MonthlyYield)
             .IsRequired();
+
+        builder.Ignore(b => b.GetEvents);
         
-        // Shadow properties
         builder.Property<DateTime>("CreatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAdd();
@@ -52,5 +43,10 @@ public class FixedIncomeOrderConfiguration : IEntityTypeConfiguration<FixedIncom
         builder.Property<DateTime>("UpdatedAt")
             .HasDefaultValueSql("NOW()")
             .ValueGeneratedOnAddOrUpdate();
+
+        builder.HasMany<FixedIncomeOrderEvent>("_events")
+            .WithOne()
+            .HasForeignKey("FixedIncomeOrderId")
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

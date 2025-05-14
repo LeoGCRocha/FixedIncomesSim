@@ -12,47 +12,56 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
     private readonly List<FixedIncomeBalance> _balances = [];
 
     public FixedIncomeSim(
-        Guid id, 
-        DateTime startDate, 
+        Guid id,
+        DateTime startDate,
         DateTime endDate,
-        decimal startAmount, 
+        decimal startAmount,
         decimal monthlyYield,
         decimal monthlyContribution
-        ) : base(id)
+    ) : base(id)
     {
         if (startDate > endDate)
             throw new Exception("Invalid definition, startDate cannot be greater than endDate.");
-        
+
         StartDate = startDate;
         StartAmount = startAmount;
         MonthlyYield = monthlyYield;
         MonthlyContribution = monthlyContribution;
         EndDate = endDate;
         InvestedAmount = StartAmount;
-        
+
         Simulate();
         GenerateBalance();
-        SetInformation(string.Empty, EFixedIncomeOrderType.Cdb);
+        Information = new InvestmentInformation(string.Empty, EFixedIncomeOrderType.Cdb);
     }
 
     public void SetInformation(string title, EFixedIncomeOrderType type)
     {
         Information = new InvestmentInformation(title, type);
     }
-    
-    public DateTime StartDate { get; private set; }
-    public DateTime EndDate { get; private set; }
+
+    public DateTime StartDate { get; init; }
+    public DateTime EndDate { get; init; }
     public decimal StartAmount { get; }
     public decimal MonthlyYield { get; }
-    public decimal MonthlyContribution { get; private set; }
+    public decimal MonthlyContribution { get; init; }
     public decimal InvestedAmount { get; private set; }
     public decimal FinalGrossAmount { get; private set; }
     public decimal FinalNetAmount { get; private set; }
     public InvestmentInformation Information { get; private set; }
-    
-    private readonly Dictionary<DateTime, decimal> _monthlyProfits = new ();
 
+    private readonly Dictionary<DateTime, decimal> _monthlyProfits = new();
     public IReadOnlyList<FixedIncomeOrder> GetOrders => _orders.AsReadOnly();
+    public IReadOnlyList<FixedIncomeBalance> GetBalances => _balances.AsReadOnly();
+
+    public IReadOnlyList<FixedIncomeOrderEvent> GetOrderEvents 
+    {
+        get
+        {
+            var fixedIncomeOrderEvents = _orders.SelectMany(o => o.GetEvents);
+            return fixedIncomeOrderEvents.ToList().AsReadOnly();
+        }
+    }
     
     private void Simulate()
     {

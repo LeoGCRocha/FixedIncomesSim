@@ -1,4 +1,4 @@
-using MediatR;
+using FixedIncome.Application.Mediator;
 using FixedIncome.Domain.Common.Abstractions;
 using FixedIncome.Infrastructure.DomainEvents.Abstractions;
 

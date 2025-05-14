@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FixedIncome.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250418134536_MigrationSetup")]
-    partial class MigrationSetup
+    [Migration("20250513203515_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,36 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("FixedIncome.Application.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccuredOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("outbox_message", "fixed_incomes");
+                });
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances.FixedIncomeBalance", b =>
                 {
@@ -40,7 +70,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<Guid?>("FixedIncomeId")
+                    b.Property<Guid?>("FixedIncomeSimId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("Profit")
@@ -56,7 +86,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FixedIncomeId");
+                    b.HasIndex("FixedIncomeSimId");
 
                     b.ToTable("fixed_income_balance", "fixed_incomes");
                 });
@@ -80,7 +110,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("FixedIncomeId")
+                    b.Property<Guid?>("FixedIncomeSimId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("MonthlyYield")
@@ -107,7 +137,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FixedIncomeId");
+                    b.HasIndex("FixedIncomeSimId");
 
                     b.ToTable("fixed_income_order", "fixed_incomes");
                 });
@@ -126,7 +156,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.Property<DateTime>("EndReferenceDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("FixedIncomeOrderId")
+                    b.Property<Guid>("FixedIncomeOrderId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("MonthlyYield")
@@ -164,11 +194,15 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<decimal>("FinalAmount")
-                        .HasColumnType("numeric");
+                    b.Property<decimal>("FinalGrossAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric")
+                        .HasDefaultValue(0m);
 
-                    b.Property<decimal>("FinalAmountNet")
-                        .HasColumnType("numeric");
+                    b.Property<decimal>("FinalNetAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric")
+                        .HasDefaultValue(0m);
 
                     b.Property<decimal>("InvestedAmount")
                         .HasColumnType("numeric");
@@ -205,7 +239,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                 {
                     b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", null)
                         .WithMany("_balances")
-                        .HasForeignKey("FixedIncomeId")
+                        .HasForeignKey("FixedIncomeSimId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -213,7 +247,7 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                 {
                     b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", null)
                         .WithMany("_orders")
-                        .HasForeignKey("FixedIncomeId")
+                        .HasForeignKey("FixedIncomeSimId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -222,7 +256,8 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                     b.HasOne("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders.FixedIncomeOrder", null)
                         .WithMany("_events")
                         .HasForeignKey("FixedIncomeOrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeSim", b =>
@@ -235,14 +270,13 @@ namespace FixedIncome.Infrastructure.Data.Migrations
                             b1.Property<string>("Title")
                                 .IsRequired()
                                 .HasColumnType("text")
-                                .HasColumnName("investiment_title");
+                                .HasColumnName("InvestmentTitle");
 
                             b1.Property<int>("Type")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasColumnName("InformationType");
 
                             b1.HasKey("FixedIncomeSimId");
-
-                            b1.HasIndex("Type");
 
                             b1.ToTable("fixed_income_simulation", "fixed_incomes");
 

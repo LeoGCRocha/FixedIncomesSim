@@ -1,4 +1,4 @@
-namespace FixedIncome.Infrastructure.Persistence.Outbox;
+namespace FixedIncome.Application.Outbox;
 
 public sealed class OutboxMessage
 {

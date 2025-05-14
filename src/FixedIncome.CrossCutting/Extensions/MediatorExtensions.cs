@@ -1,14 +1,32 @@
+using System.Reflection;
+using FixedIncome.Application.Mediator;
+using FixedIncome.Infrastructure.Mediator;
 using Microsoft.Extensions.DependencyInjection;
-using FixedIncome.Application.FixedIncomeSimulation;
 
 namespace FixedIncome.CrossCutting.Extensions;
 
 public static class MediatorExtensions
 {
-    public static IServiceCollection AddMediatorServices(this IServiceCollection services)
+    public static IServiceCollection AddBasicMediator(this IServiceCollection services, Assembly? assembly = null)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(FixedIncomeBalanceModule).Assembly));
+        services.AddScoped<IMediator, Mediator>();
+        
+        assembly ??= Assembly.GetCallingAssembly();
+
+        var handlerTypes = assembly
+            .GetTypes()
+            .Where(type => type is { IsClass: true, IsAbstract: false, IsInterface: false })
+            .SelectMany(
+                type => type.GetInterfaces()
+                    .Where(i => i.IsGenericType 
+                                && (i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>) || i.GetGenericTypeDefinition() == typeof(IRequestHandler<>)))
+                    .Select(i => new { Interface = i, Implementation = type })
+            );
+
+        foreach (var handler in handlerTypes)
+            services.AddScoped(handler.Interface, handler.Implementation);
+        
         
         return services;
-    }
+    } 
 }

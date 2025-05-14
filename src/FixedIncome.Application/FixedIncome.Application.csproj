@@ -10,19 +10,12 @@
       <PackageReference Include="Carter" Version="8.0.0" />
       <PackageReference Include="CsvHelper" Version="33.0.1" />
       <PackageReference Include="Dapper" Version="2.1.66" />
-      <PackageReference Include="MediatR" Version="12.5.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
-      <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="FixedIncomeSimulation\Abstractions\Outbox\" />
-      <Folder Include="RabbitMq\" />
     </ItemGroup>
 
 </Project>

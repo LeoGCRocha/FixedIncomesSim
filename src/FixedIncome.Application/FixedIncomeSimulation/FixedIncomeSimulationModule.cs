@@ -1,7 +1,7 @@
 using Carter;
 using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedIncome;
-using MediatR;
+using FixedIncome.Application.Mediator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;

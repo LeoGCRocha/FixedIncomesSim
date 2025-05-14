@@ -1,4 +1,4 @@
-namespace FixedIncome.Domain.FixedIncomeSimulation.Repository;
+namespace FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 
 public interface IFixedIncomeRepository
 {

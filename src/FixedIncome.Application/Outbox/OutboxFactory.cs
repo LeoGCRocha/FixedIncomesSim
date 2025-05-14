@@ -3,7 +3,7 @@ using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Outbox;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 using Newtonsoft.Json;
 
-namespace FixedIncome.Infrastructure.Factories.Outbox;
+namespace FixedIncome.Application.Outbox;
 
 public class OutboxFactory : IOutboxFactory
 {

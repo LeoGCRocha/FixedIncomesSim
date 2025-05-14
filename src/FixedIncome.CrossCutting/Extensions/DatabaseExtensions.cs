@@ -1,6 +1,9 @@
+using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Repositories;
+using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 using FixedIncome.Infrastructure.Configuration;
 using FixedIncome.Infrastructure.Persistence;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
+using FixedIncome.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +20,8 @@ public static class DatabaseExtensions
         });
 
         services.AddTransient<IDapperDbContext, DapperDbContext>();
+        services.AddScoped<IFixedIncomeRepository, FixedIncomeRepository>();
+        services.AddScoped<IFixedIncomeQueryRepository, FixedIncomeQueryRepository>();
         
         return services;
     }

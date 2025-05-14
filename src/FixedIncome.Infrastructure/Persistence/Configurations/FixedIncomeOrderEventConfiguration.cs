@@ -2,7 +2,7 @@ using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FixedIncome.Infrastructure.Persistence.FixedIncomeSimulation.Configurations;
+namespace FixedIncome.Infrastructure.Persistence.Configurations;
 
 public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<FixedIncomeOrderEvent>
 {
@@ -11,12 +11,7 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
         builder.ToTable("fixed_income_order_event");
 
         builder.HasKey(f => f.Id);
-
-        builder.HasOne<FixedIncomeOrder>()
-            .WithMany("_events")
-            .HasForeignKey("FixedIncomeOrderId")
-            .OnDelete(DeleteBehavior.Cascade);
-
+        
         builder.Property(f => f.StartReferenceDate)
             .IsRequired();
 
@@ -34,5 +29,8 @@ public class FixedIncomeOrderEventConfiguration : IEntityTypeConfiguration<Fixed
 
         builder.Property(f => f.Profit)
             .HasDefaultValue(0);
+
+        builder.Property<Guid>("FixedIncomeOrderId")
+            .IsRequired();
     }
 }

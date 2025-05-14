@@ -1,4 +1,5 @@
-using MediatR;
+
+using FixedIncome.Application.Mediator;
 
 namespace FixedIncome.Application.FixedIncomeSimulation.Commands.DeleteFixedIncome;
 

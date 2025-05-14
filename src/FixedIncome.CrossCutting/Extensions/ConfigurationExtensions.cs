@@ -1,3 +1,4 @@
+using FixedIncome.Application.FixedIncomeSimulation.Abstractions;
 using RabbitMQ.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,7 @@ public static class ConfigurationExtensions
         });
         services.AddScoped<IProducerFactory, ProducerFactory>();
         services.AddSingleton<IMessageBrokerConnection, MessageBrokerConnection>();
+        services.AddTransient<IPathProvider, PathProvider>();
 
         return services;
     }
