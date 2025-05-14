@@ -32,7 +32,7 @@ public sealed class FixedIncomeSim : AggregateRoot<Guid>
 
         Simulate();
         GenerateBalance();
-        SetInformation(string.Empty, EFixedIncomeOrderType.Cdb);
+        Information = new InvestmentInformation(string.Empty, EFixedIncomeOrderType.Cdb);
     }
 
     public void SetInformation(string title, EFixedIncomeOrderType type)
