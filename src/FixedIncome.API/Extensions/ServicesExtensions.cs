@@ -29,7 +29,7 @@ public static class ServicesExtensions
     {
         services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddScoped<IOutboxFactory, OutboxFactory>();
-        services.AddScoped<SimulationEndedProducer>();
+        services.AddSingleton<SimulationEndedProducer>();
 
         return services;
     }

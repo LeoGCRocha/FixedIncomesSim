@@ -3,7 +3,6 @@ using RabbitMQ.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
-using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.BackgroundJobs;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
 using FixedIncome.Infrastructure.Factories.Producer;

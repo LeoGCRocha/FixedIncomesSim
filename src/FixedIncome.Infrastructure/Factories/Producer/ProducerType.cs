@@ -1,4 +1,4 @@
-namespace FixedIncome.Application.Factories.Producer;
+namespace FixedIncome.Infrastructure.Factories.Producer;
 
 public enum ProducerType
 {

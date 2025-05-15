@@ -5,11 +5,11 @@ namespace FixedIncome.Infrastructure.CircuitBreaker;
 
 public static class CircuitBreakerFactory
 {
-    public static IAsyncPolicy CreateMessagePolicy()
+    public static ISyncPolicy CreateMessagePolicy()
     {
         var circuitBreakerPolicy = Policy
             .Handle<Exception>()
-            .CircuitBreakerAsync(
+            .CircuitBreaker(
                 exceptionsAllowedBeforeBreaking: 3,
                 durationOfBreak: TimeSpan.FromSeconds(30)
             );
