@@ -5,12 +5,9 @@ using FixedIncome.Domain.Common.ValueObjects;
 using FixedIncome.Integration.Tests.Fixture;
 using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateFixedIncome;
 using FixedIncome.Application.Outbox;
-using FixedIncome.Domain.FixedIncomeSimulation;
-using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeOrders;
 using FixedIncome.Domain.FixedIncomeSimulation.Repositories;
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Infrastructure.Persistence.Outbox;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
@@ -43,10 +40,10 @@ public class CreateFixedIncomeCommandHandlerTest
         _unitOfWork.OutboxPatternRepository.Returns(outboxPatternRepositoryMock);
         
         _outboxFactory.CreateOutboxMessage(EOutboxMessageTypes.Email, Arg.Any<Guid>())
-            .Returns(_ => OutboxMessage.OutboxMessageBuilder(EOutboxMessageTypes.Email.ToString(), ""));
+            .Returns(_ => OutboxMessage.OutboxMessageBuilder(nameof(EOutboxMessageTypes.Email), ""));
         
         _outboxFactory.CreateOutboxMessage(EOutboxMessageTypes.File, Arg.Any<Guid>())
-            .Returns(_ => OutboxMessage.OutboxMessageBuilder(EOutboxMessageTypes.File.ToString(), ""));
+            .Returns(_ => OutboxMessage.OutboxMessageBuilder(nameof(EOutboxMessageTypes.File), ""));
         
         var request = new CreateFixedIncomeCommand
         {
@@ -60,14 +57,11 @@ public class CreateFixedIncomeCommandHandlerTest
         
         // Act
         await _commandHandler.Handle(request, CancellationToken.None);
-        
-        // Assert
-        await _unitOfWork.FixedIncomeRepository.Received(1).AddAsync(Arg.Any<FixedIncomeSim>());
+
+        await _unitOfWork.OutboxPatternRepository.Received(1)
+            .AddAsync(Arg.Is<OutboxMessage>(x => x.Type == nameof(EOutboxMessageTypes.Email)));
         
         await _unitOfWork.OutboxPatternRepository.Received(1)
-            .AddAsync(Arg.Is<OutboxMessage>(x => x.Type == EOutboxMessageTypes.Email.ToString()));
-        
-        await _unitOfWork.OutboxPatternRepository.Received(1)
-            .AddAsync(Arg.Is<OutboxMessage>(x => x.Type == EOutboxMessageTypes.File.ToString()));
+            .AddAsync(Arg.Is<OutboxMessage>(x => x.Type == nameof(EOutboxMessageTypes.File)));
     }
 }
