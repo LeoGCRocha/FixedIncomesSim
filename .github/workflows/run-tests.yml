@@ -1,13 +1,13 @@
-name: Run Unit Tests
+name: Run Unit Tests 🚀
 
 on:
   push:
-    branches: [main, develop]  
+    branches: [main]  
   pull_request:
-    branches: [main, develop]
+    branches: [main]
     
 jobs:
-  tests:
+  unit:
     runs-on: ubuntu-latest
     
     steps:

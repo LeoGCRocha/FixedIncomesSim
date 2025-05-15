@@ -21,6 +21,7 @@ services.AddSwaggerGen();
 services.AddCarter();
 
 services.AddConfigurations(builder.Configuration);
+
 services.AddMessaging();
 services.AddServices();
 services.AddBasicMediator(typeof(GetFixedBalanceQueryHandler).Assembly);
@@ -30,7 +31,7 @@ services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 services.AddHostedService<BackgroundOutboxJob>();
 services.AddHostedService<BackgroundEmailJob>();
 
-services.AddSingleton<IAsyncPolicy>(_ => CircuitBreakerFactory.CreateMessagePolicy());
+services.AddSingleton<ISyncPolicy>(_ => CircuitBreakerFactory.CreateMessagePolicy());
 
 var app = builder.Build();
 

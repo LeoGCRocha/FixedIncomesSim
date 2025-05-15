@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using FixedIncome.Application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Persistence.Outbox;
 using FixedIncome.Infrastructure.Factories.Producer;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
@@ -19,13 +18,13 @@ public class BackgroundOutboxJob : BackgroundService
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<BackgroundOutboxJob> _logger;
     private readonly IBackgroundTaskQueue _backgroundTaskQueue;
-    private readonly IAsyncPolicy _circuitBreakerPolicy;
+    private readonly ISyncPolicy _circuitBreakerPolicy;
 
     public BackgroundOutboxJob(
         IServiceProvider provider,
         ILogger<BackgroundOutboxJob> logger, 
         IBackgroundTaskQueue backgroundTaskQueue,
-        IAsyncPolicy circuitBreakerPolicy)
+        ISyncPolicy circuitBreakerPolicy)
     {
         _logger = logger;
         _serviceProvider = provider;
@@ -46,9 +45,9 @@ public class BackgroundOutboxJob : BackgroundService
                 try
                 {
                     // On circuit breaker open will not run de execute async
-                    producer = await _circuitBreakerPolicy.ExecuteAsync(() =>
-                        Task.Run(() => producerFactory.GetProducerService(ProducerType.SimulationEnded), stoppingToken)
-                    );
+                    producer = _circuitBreakerPolicy.Execute(_ => 
+                        producerFactory.GetProducerService(ProducerType.SimulationEnded), 
+                        stoppingToken);
                 }
                 catch (BrokenCircuitException ex)
                 {

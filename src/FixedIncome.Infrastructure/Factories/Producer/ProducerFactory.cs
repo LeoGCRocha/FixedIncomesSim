@@ -1,4 +1,3 @@
-using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Infrastructure.Messaging.Abstractions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
 using Microsoft.Extensions.DependencyInjection;

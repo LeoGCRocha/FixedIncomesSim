@@ -1,6 +1,5 @@
 using System.Text;
 using FixedIncome.Application.Exceptions;
-using FixedIncome.Application.Factories.Producer;
 using FixedIncome.Application.FixedIncomeSimulation.Commands.CreateBalanceFile;
 using FixedIncome.Application.Mediator;
 using FixedIncome.Infrastructure.Factories.Producer;
