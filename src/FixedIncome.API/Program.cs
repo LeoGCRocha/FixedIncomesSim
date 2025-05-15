@@ -1,10 +1,12 @@
-﻿using Carter;
+﻿using Polly;
+using Carter;
 using FixedIncome.API.Extensions;
 using FixedIncome.API.Middlewares;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
 using FixedIncome.CrossCutting.Extensions;
 using FixedIncome.Infrastructure.BackgroundJobs;
 using FixedIncome.Infrastructure.BackgroundJobs.Abstractions;
+using FixedIncome.Infrastructure.CircuitBreaker;
 using FixedIncome.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,11 +30,12 @@ services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 services.AddHostedService<BackgroundOutboxJob>();
 services.AddHostedService<BackgroundEmailJob>();
 
+services.AddSingleton<IAsyncPolicy>(_ => CircuitBreakerFactory.CreateMessagePolicy());
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    // TODO Add swagger version
     app.UseSwagger();
     app.UseSwaggerUI();
     
