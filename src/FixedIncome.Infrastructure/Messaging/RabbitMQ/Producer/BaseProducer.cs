@@ -26,6 +26,7 @@ public abstract class BaseProducer : IProducer
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            throw;
         }
     }
     

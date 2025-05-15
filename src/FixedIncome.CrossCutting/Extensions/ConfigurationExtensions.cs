@@ -28,6 +28,8 @@ public static class ConfigurationExtensions
         return services;
     }
     public static IServiceCollection AddMessaging(this IServiceCollection services) {
+        // Here is a problem, if connection fails the connection will never be open again unless the application is restarted
+        //  The responsibility of the creation of the connection should be replicated on the Producer
         services.AddSingleton<IConnection>(provider =>
         {
             var configuration = provider.GetRequiredService<RabbitMqConfiguration>();
