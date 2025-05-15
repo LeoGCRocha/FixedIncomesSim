@@ -9,6 +9,7 @@ using FixedIncome.Infrastructure.Messaging.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using FixedIncome.Infrastructure.Messaging.RabbitMQ.Producer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace FixedIncome.Integration.Tests.Fixture;
 
@@ -23,6 +24,7 @@ public class WebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TPr
 
     public static Dictionary<string, string?> StringDictionary(int port)
     {
+        
         return new Dictionary<string, string?>()
         {
             // Postgres
@@ -36,6 +38,11 @@ public class WebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TPr
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.ConfigureLogging(logging =>
+        {
+            logging.ClearProviders();  
+        });
+        
         builder.ConfigureAppConfiguration((_, configBuilder) =>
         {
             configBuilder.AddInMemoryCollection(StringDictionary(_port));
