@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: fixed-income-api
-          image: leogcrocha/fixedincome.api:0.1
+          image: leogcrocha/fixedincome.api:0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
