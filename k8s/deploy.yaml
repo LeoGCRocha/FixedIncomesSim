@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: FixedIncomeApi
+  labels:
+    app: FixedIncomeApi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: FixedIncomeApi
+  template:
+    metadata:
+      name: FixedIncomeApi
+      labels:
+        app: FixedIncomeApi
+    spec:
+      containers:
+        - name: FixedIncomeApi
+          image: leogcrocha/fixedincomeapi:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+      

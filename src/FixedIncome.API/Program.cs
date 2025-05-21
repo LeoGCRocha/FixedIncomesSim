@@ -35,6 +35,8 @@ services.AddSingleton<ISyncPolicy>(_ => CircuitBreakerFactory.CreateMessagePolic
 
 var app = builder.Build();
 
+app.MapGet("/", () => "Hello World");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

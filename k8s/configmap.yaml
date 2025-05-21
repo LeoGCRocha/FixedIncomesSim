@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "FixedIncomeSimConfigMap"
+data:
+  OutputDirectory: "/home/leorocha/Downloads/FixedIncomeSim"
+  FixedIncomeDbHost: "localhost"
+  FixedIncomeDbPort: "5432"
+  FixedIncomeDbDatabase: "fixed_income_db"
+  FixedIncomeDbUsername  : "postgres"
