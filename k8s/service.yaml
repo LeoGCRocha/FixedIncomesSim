@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: fixed-income-api-service
+  namespace: fixed-income-sim
+spec:
+  selector:
+    app: fixed-income-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 8080
+  type: LoadBalancer

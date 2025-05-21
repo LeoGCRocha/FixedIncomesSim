@@ -1,4 +1,12 @@
 services:
+  fixedincome.api:
+    image: fixedincome.api
+    build:
+      context: .
+      dockerfile: src/FixedIncome.API/Dockerfile
+    ports:
+      - "8080:8080"
+  
   db:
     image: postgres:latest
     container_name: postgres-db

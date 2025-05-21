@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configuration
+  namespace: fixed-income-sim
+  labels:
+    app: postgres
+data:
+  PGUSER: postgres
+  PGPASSWORD: postgres
+  PGDATABASE: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: fixed_income_db

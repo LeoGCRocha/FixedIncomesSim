@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: fixed-income-api-deployment
+  namespace: fixed-income-sim
+  labels:
+    app: deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fixed-income-api
+  template:
+    metadata:
+      name: fixed-income-api-pods
+      labels:
+        app: fixed-income-api
+    spec:
+      containers:
+        - name: fixed-income-api
+          image: leogcrocha/fixedincome.api:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "100m"        
+              memory: "128Mi"     
+            limits:
+              cpu: "500m"         
+              memory: "512Mi"   
+      restartPolicy: Always

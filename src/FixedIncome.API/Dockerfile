@@ -8,16 +8,18 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/FixedIncome.API/FixedIncome.API.csproj", "src/FixedIncome.API/"]
+COPY ["src/FixedIncome.Application/FixedIncome.Application.csproj", "src/FixedIncome.Application/"]
 COPY ["src/FixedIncome.Domain/FixedIncome.Domain.csproj", "src/FixedIncome.Domain/"]
+COPY ["src/FixedIncome.CrossCutting/FixedIncome.CrossCutting.csproj", "src/FixedIncome.CrossCutting/"]
 COPY ["src/FixedIncome.Infrastructure/FixedIncome.Infrastructure.csproj", "src/FixedIncome.Infrastructure/"]
 RUN dotnet restore "src/FixedIncome.API/FixedIncome.API.csproj"
 COPY . .
 WORKDIR "/src/src/FixedIncome.API"
-RUN dotnet build "FixedIncome.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./FixedIncome.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "FixedIncome.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./FixedIncome.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
