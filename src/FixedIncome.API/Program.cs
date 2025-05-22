@@ -35,11 +35,11 @@ services.AddSingleton<ISyncPolicy>(_ => CircuitBreakerFactory.CreateMessagePolic
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.EnsureCreated();

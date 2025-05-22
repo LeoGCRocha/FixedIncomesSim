@@ -1,6 +1,7 @@
 using FixedIncome.Infrastructure.Persistence.Abstractions;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedIncome;
 using FixedIncome.Application.FixedIncomeSimulation.Abstractions.Repositories;
+using FixedIncome.Application.FixedIncomeSimulation.Queries.GetAggrFixedIncomeEvents;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
 using FixedIncome.Domain.FixedIncomeSimulation.FixedIncomeBalances;
 
@@ -76,5 +77,30 @@ public class FixedIncomeQueryRepository(IDapperDbContext dapperDbContext) : IFix
         });
 
         return response;
+    }
+
+    public async Task<IEnumerable<AggrFixedIncomeEventResponse>> GetAggrFixedIncomeEventsById(Guid id)
+    {
+	    const string query = """
+	                         SELECT
+	                         	count(*) AS "Count",
+	                         	round(sum("Profit"), 2) AS "Profit",
+	                         	"StartReferenceDate"::date,
+	                         	"EndReferenceDate"::date
+	                         FROM
+	                         	fixed_incomes.fixed_income_order_event
+	                         WHERE "Id" = @Id
+	                         GROUP BY
+	                         	"StartReferenceDate"::date,
+	                         	"EndReferenceDate"::date
+	                         ORDER BY "StartReferenceDate"::date
+	                         
+	                         """;
+	    var response = await dapperDbContext.GetAsync<AggrFixedIncomeEventResponse>(query, new
+	    {
+			id
+	    });
+
+	    return response;
     }
 }

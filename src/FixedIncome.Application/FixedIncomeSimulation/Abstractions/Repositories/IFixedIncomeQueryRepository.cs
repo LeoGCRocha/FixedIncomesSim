@@ -1,3 +1,4 @@
+using FixedIncome.Application.FixedIncomeSimulation.Queries.GetAggrFixedIncomeEvents;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedBalance;
 using FixedIncome.Application.FixedIncomeSimulation.Queries.GetFixedIncome;
 
@@ -7,4 +8,5 @@ public interface IFixedIncomeQueryRepository
 {
     public Task<FixedIncomeResponse?> GetResultById(Guid id);
     public Task<IEnumerable<FixedBalanceResponse>> GetBalancesById(Guid id);
+    public Task<IEnumerable<AggrFixedIncomeEventResponse>> GetAggrFixedIncomeEventsById(Guid id);
 }
