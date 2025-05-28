@@ -82,20 +82,28 @@ public class FixedIncomeQueryRepository(IDapperDbContext dapperDbContext) : IFix
     public async Task<IEnumerable<AggrFixedIncomeEventResponse>> GetAggrFixedIncomeEventsById(Guid id)
     {
 	    const string query = """
-	                         SELECT
-	                         	count(*) AS "Count",
-	                         	round(sum("Profit"), 2) AS "Profit",
-	                         	"StartReferenceDate"::date,
-	                         	"EndReferenceDate"::date
-	                         FROM
-	                         	fixed_incomes.fixed_income_order_event
-	                         WHERE "Id" = @Id
+	                         /*
+	                         * [Query: GetAggrFixedIncomeEventsById]
+	                         */
+	                         SELECT 
+	                         count(*) AS "Count",
+	                         round(sum(eve."Profit"), 2) AS "Profit",
+	                         eve."StartReferenceDate"::date,
+	                         eve."EndReferenceDate"::date
+	                         FROM 
+	                             fixed_incomes.fixed_income_order_event eve
+	                         WHERE 
+	                             eve."FixedIncomeOrderId" IN (
+	                                 SELECT fio."Id"
+	                                 FROM fixed_incomes.fixed_income_order fio
+	                                 WHERE fio."FixedIncomeSimId" = @Id
+	                             )
 	                         GROUP BY
-	                         	"StartReferenceDate"::date,
-	                         	"EndReferenceDate"::date
-	                         ORDER BY "StartReferenceDate"::date
-	                         
+	                         	eve."StartReferenceDate"::date,
+	                         	eve."EndReferenceDate"::date
+	                         ORDER BY eve."StartReferenceDate"::date
 	                         """;
+	    
 	    var response = await dapperDbContext.GetAsync<AggrFixedIncomeEventResponse>(query, new
 	    {
 			id
