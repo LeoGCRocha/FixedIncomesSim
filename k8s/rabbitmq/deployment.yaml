@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit-fixed-income-api-deployment
+  namespace: fixed-income-sim
+  labels:
+    app: rabbit-fixed-income-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit-fixed-income-api
+  template:
+    metadata:
+      labels:
+        app: rabbit-fixed-income-api
+    spec:
+      containers:
+        - name: fixed-income-rabbit-mq
+          image: rabbitmq:3-management
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "guest"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "guest"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+      volumes:
+        - name: rabbitmq-data
+          persistentVolumeClaim:
+            claimName: rabbitmq-fixed-income-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-fixed-income-pvc
+  namespace: fixed-income-sim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: fixed-income-rabbitamq-service
+  namespace: fixed-income-sim
+spec:
+  selector:
+    app: rabbit-fixed-income-api
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: fixed-income-rabbitmq-mang-service
+  namespace: fixed-income-sim
+spec:
+  selector:
+    app: rabbit-fixed-income-api
+  ports:
+    - protocol: TCP
+      port: 15672 
+      targetPort: 15672
+      nodePort: 31567
+  type: NodePort

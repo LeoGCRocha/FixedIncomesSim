@@ -45,3 +45,8 @@ kubectl apply -f k8s/postgresql/persintentvolumes.yaml
 ```
 kubectl apply -f k8s/postgres/deployment.yaml
 ```
+
+## Deploy do Rabbit MQ
+```
+kubectl apply -f k8s/rabbitmq/deployment.yaml
+```
