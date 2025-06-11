@@ -20,11 +20,17 @@ spec:
     spec:
       containers:
         - name: fixed-income-api
-          image: leogcrocha/fixedincome.api:0.5
+          image: leogcrocha/fixedincome.api:0.9
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               protocol: TCP
+          env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Development"
+          envFrom:
+            - configMapRef:
+                name: "fixed-income-sim-config"
           resources:
             requests:
               cpu: "100m"        

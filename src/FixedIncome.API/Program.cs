@@ -15,6 +15,8 @@ var services = builder.Services;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+// TODO: Instead of using AppSettings on K8s should use Secrets & ConfigMaps
+
 services.AddRepositories();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();

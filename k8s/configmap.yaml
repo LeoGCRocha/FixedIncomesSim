@@ -1,10 +1,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "FixedIncomeSimConfigMap"
+  name: "fixed-income-sim-config"
 data:
-  OutputDirectory: "/home/leorocha/Downloads/FixedIncomeSim"
-  FixedIncomeDbHost: "localhost"
-  FixedIncomeDbPort: "5432"
-  FixedIncomeDbDatabase: "fixed_income_db"
-  FixedIncomeDbUsername  : "postgres"
+  Paths__OutputDirectory: "/home/leorocha/Downloads/FixedIncomeSim"
+  Postgres__Host: "postgres"
+  Postgres__Port: "5432"
+  Postgres__Database: "fixed_income_db"
+  Postgres__Username: "postgres"
+  Postgres__Password: "postgres"
+  RabbitMq__Host: "fixed-income-rabbitamq-service"
+  RabbitMq__Port: "5672"
+  RabbitMq__Username: "guest"
+  RabbitMq__Password: "guest"
