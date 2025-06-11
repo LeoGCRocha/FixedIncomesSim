@@ -52,6 +52,7 @@ public class BackgroundOutboxJob : BackgroundService
                 catch (BrokenCircuitException ex)
                 {
                     _logger.LogError(ex, "Circuit breaker is now open for messaging publishing.");
+                    await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
                     continue;
                 }
                 catch (Exception ex)
